@@ -1,10 +1,3 @@
-
-// import * as Popper from '@popperjs/core'
-// window.Popper = Popper
-
-// import 'bootstrap'
-
-
 import axios from 'axios'
 window.axios = axios
 
@@ -35,10 +28,10 @@ axios.interceptors.response.use((response) => {
     if (response.status == 201) {
         store.dispatch("showMessage", "Prawidłowo utworzono")
     }
-    if (response.status == 234) {
+    else if (response.status == 234) {
         store.dispatch("showMessage", "Prawidłowo zaaktualizowano")
     }
-    if (response.status == 250) {
+    else if (response.status == 250) {
         store.dispatch("showMessage", "Prawidłowo usunięto")
     }
     return response;

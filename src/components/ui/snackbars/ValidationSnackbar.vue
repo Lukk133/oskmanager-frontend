@@ -1,5 +1,5 @@
 <template>
-    <div class="text-center" v-if="authenticated && actualUser.id && error && error.length > 0">
+    <div class="text-center" v-if="isAuthenticated && actualUser.id && error && error.length > 0">
         <v-snackbar v-model="showError" timeout="3000" color="error" location="top">
             {{ error }}
         </v-snackbar>
@@ -19,8 +19,8 @@ export default {
         error() {
             return this.$store.getters.getError;
         },
-        authenticated() {
-            return this.$store.getters.getAuthenticated
+        isAuthenticated() {
+            return this.$store.getters.getIsAuthenticated
         },
         actualUser() {
             return this.$store.getters.getActualUser

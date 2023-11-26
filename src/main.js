@@ -11,6 +11,7 @@ import customThemes from './plugins/colors.ts'
 
 import "./bootstrap"
 
+import moment from 'moment'
 
 
 const customLightTheme = customThemes.customLightTheme;
@@ -24,7 +25,7 @@ const vuetify = createVuetify({
     }
 })
 
-console.log(vuetify)
 
 const app = createApp(MainLayout);
+app.config.globalProperties.$moment = moment;
 app.use(vuetify).use(store).use(router).mount('#app')

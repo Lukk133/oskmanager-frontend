@@ -1,14 +1,57 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import Login from "./views/auth/Login.vue"
 import Home from "./views/Home.vue"
+import SchoolList from "./views/school/List.vue"
+import SchoolSettings from "./views/school/Settings.vue"
+import StudentList from "./views/student/List.vue"
+import InstructorList from "./views/instructor/List.vue"
+import CarList from "./views/car/List.vue"
 
+import store from './store'
 
 
 const routes = [
     {
+        name: "Login",
+        path: "/login",
+        component: Login,
+    },
+    {
         name: "Home",
         path: "/home",
         component: Home,
+        meta: { requiresAuth: true }
+    },
+    {
+        name: "SchoolList",
+        path: "/schools",
+        component: SchoolList,
+        meta: { requiresAuth: true }
+    },
+    {
+        name: "SchoolSettings",
+        path: "/:schoolId",
+        component: SchoolSettings,
+        meta: { requiresAuth: true }
+    },
+    {
+        name: "StudentList",
+        path: "/:schoolId/students",
+        component: StudentList,
+        meta: { requiresAuth: true }
+    },
+    {
+        name: "InstructorList",
+        path: "/:schoolId/instructors",
+        component: InstructorList,
+        meta: { requiresAuth: true }
+    },
+    {
+        name: "CarList",
+        path: "/:schoolId/cars",
+        component: CarList,
+        meta: { requiresAuth: true }
     },
     {
         name: "EmptyPage",
@@ -25,10 +68,17 @@ router.beforeEach((to, from, next) => {
     if (from.name) {
         window.scrollTo(0, 0)
     }
-    if (to.name == 'EmptyPage') {
-        next("home")
+    const token = localStorage.getItem('access_token');
+    if (token) {
+        store.commit('setIsAuthenticated', true);
+    }
+    const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+    const isAuthenticated = store.getters.getIsAuthenticated;
+
+    if (requiresAuth && !isAuthenticated) {
+        next('/login');
     } else {
-        next()
+        next();
     }
 })
 

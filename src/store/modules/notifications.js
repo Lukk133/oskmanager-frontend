@@ -38,6 +38,8 @@ export default {
     },
     actions: {
         showError(state, error) {
+            console.log("showinf")
+            console.log(error)
             state.commit("setShowError", true);
             state.commit("setError", error);
         },

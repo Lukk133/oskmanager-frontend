@@ -3,17 +3,16 @@
         <v-table fixed-header>
             <thead>
                 <tr>
-                    <th v-for="header in headers" :key="header" class="text-center">
+                    <th v-for="header in headers" :key="header">
                         {{ header }}
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="student in students" :key="student.id">
-                    <td>{{ student.id }}</td>
+                <tr v-for="(student, index) in students" :key="student.id">
+                    <td>{{ index + 1 }}.</td>
                     <td>{{ `${student.name} ${student.lastName}` }}</td>
                     <td>{{ $moment(student.createdAt).format('DD-MM-Y') }}</td>
-
                     <td>
                         <div>
                             <DeleteConfimrationDialog :label="`Szkołę : ${student.name}`" @destroy="destroy(student.id)" />

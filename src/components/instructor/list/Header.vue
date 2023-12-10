@@ -1,5 +1,3 @@
-
-
 <template>
     <div>
         <ModuleTitle :icon="'instructor.svg'" :title="'INSTRUKTORZY'" :label="'Lista instruktorów'">

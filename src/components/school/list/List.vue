@@ -3,14 +3,14 @@
         <v-table fixed-header>
             <thead>
                 <tr>
-                    <th v-for="header in headers" :key="header" class="text-center">
+                    <th v-for="header in headers" :key="header">
                         {{ header }}
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="school in schools" :key="school.id">
-                    <td>{{ school.id }}</td>
+                <tr v-for="(school, index) in schools" :key="school.id">
+                    <td>{{ index + 1 }}</td>
                     <td>{{ school.name }}</td>
                     <td>{{ school.code }}</td>
                     <td>{{ school.numberOfInstructors }}</td>

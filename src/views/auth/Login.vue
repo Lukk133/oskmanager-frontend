@@ -1,10 +1,10 @@
 <template>
-    <div class="mt-16">
+    <div class="mt-16 text-center">
         <v-snackbar v-model="showError" timeout="3000" color="error" location="top">
             {{ error }}
         </v-snackbar>
         <v-form v-model="form" @submit.prevent="login">
-            <v-card width="400">
+            <v-card width="400" class="mx-auto">
                 <v-card-title>
                     LOGIN PAGE
                 </v-card-title>

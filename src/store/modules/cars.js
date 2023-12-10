@@ -1,7 +1,8 @@
 const URL_CARS = '/cars';
 
 const defaultCarsParams = {
-    schoolId: 0
+    schoolId: 0,
+    categoryId: 0
 };
 const defaultCar = {
     brandId: 0,
@@ -44,6 +45,8 @@ export default {
     actions: {
         listCars({ commit, getters }) {
             const params = getters.getCarsParams;
+            console.log(params)
+            console.log("params")
             axios.get(URL_CARS, { params: params })
                 .then(response => {
                     const cars = response.data;

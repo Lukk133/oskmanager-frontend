@@ -29,7 +29,7 @@ export default {
             const params = state.getters.getModulesParams;
             axios.get(URL_MODULES, { params: params })
                 .then(response => {
-                    const modules = response.data
+                    const modules = response.data.sort((a, b) => a.order - b.order)
                     state.commit("setModules", modules)
                 })
         },

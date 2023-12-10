@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import List from '../../components/car/List.vue';
-import Create from '../../components/car/Create.vue';
+import List from '../../components/car/list/List.vue';
+import Create from '../../components/car/list/Create.vue';
 
 export default {
     components: {

@@ -6,9 +6,9 @@
     </div>
 </template>
 <script>
-import Create from '../../components/school/Create.vue';
-import Filter from '../../components/school/Filter.vue';
-import List from '../../components/school/List.vue';
+import Create from '../../components/school/list/Create.vue';
+import Filter from '../../components/school/list/Filter.vue';
+import List from '../../components/school/list/List.vue';
 export default {
     components: {
         Create,

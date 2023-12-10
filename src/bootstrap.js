@@ -1,6 +1,8 @@
 import axios from 'axios'
 window.axios = axios
 
+import qs from 'qs';
+
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.withCredentials = true
@@ -10,6 +12,9 @@ import store from './store';
 
 
 
+axios.defaults.paramsSerializer = params => {
+    return qs.stringify(params, { arrayFormat: 'repeat' });
+};
 
 axios.interceptors.request.use(
     config => {

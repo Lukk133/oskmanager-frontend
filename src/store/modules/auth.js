@@ -37,10 +37,15 @@ export default {
         },
         async getActualUser(state) {
             await axios.get(URL_AUTH + '/get-actual').then(({ data }) => {
+
                 state.commit("setActualUser", data);
                 state.commit("setIsAuthenticated", true);
                 var modulesParams = store.getters.getModulesParams
-                modulesParams.roleId = data.roles[0].id
+                if (data.roles.length === 0) {
+                    modulesParams.roleId = 1
+                } else {
+                    modulesParams.roleId = data.roles[0].id
+                }
                 const roles = data.roles.map(role => role.name);
                 localStorage.setItem('roles', roles)
                 store.commit("setModulesParams", modulesParams)

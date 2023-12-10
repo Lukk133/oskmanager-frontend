@@ -1,18 +1,31 @@
 <template>
     <div>
-        <CreateCourseType @created="listCourseTypes" />
-        <ListCourseType @list="listCourseTypes" />
+        <Header />
+        <div class="courses-types" v-if="isActual('course-types')">
+            <CreateCourseType @created="listCourseTypes" />
+            <ListCourseType @list="listCourseTypes" />
+        </div>
+        <div class="locations" v-else-if="isActual('locations')">
+            <LocationsList />
+        </div>
     </div>
 </template>
 <script>
-import ListCourseType from "../../components/courseType/List.vue"
-import CreateCourseType from "../../components/courseType/Create.vue"
+import Header from "../../components/school/settings/Header.vue"
+import ListCourseType from "../../components/course-type/List.vue"
+import CreateCourseType from "../../components/course-type/Create.vue"
+import LocationsList from "../../components/locations/list/List.vue"
 export default {
     components: {
+        Header,
         ListCourseType,
-        CreateCourseType
+        CreateCourseType,
+        LocationsList,
     },
     methods: {
+        isActual(name) {
+            return this.$route.query.tab == name
+        },
         listCourseTypes() {
             this.$store.dispatch("listCourseTypes")
         },

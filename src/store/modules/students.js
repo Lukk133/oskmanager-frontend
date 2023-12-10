@@ -13,6 +13,7 @@ const defaultStudent = {
 
 const defaultStudentsParams = {
     name: "",
+    fullName: "",
     schoolId: 0
 }
 

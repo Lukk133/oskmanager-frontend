@@ -8,6 +8,7 @@
                     <ctd class="d-flex align-center c-pointer" @click="goTo(instructor.id)">
                         <AvatarImg :obj="instructor" class="mx-1" />
                         {{ `${instructor.name} ${instructor.lastName}` }}
+                        <!--Halo-->
                     </ctd>
                     <ctd>{{ $moment(instructor.createdAt).format("DD-MM-Y") }}</ctd>
                     <ctd>{{ instructor.category?.name }}</ctd>

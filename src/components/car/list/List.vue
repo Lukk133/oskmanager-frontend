@@ -1,41 +1,35 @@
 <template>
     <div class="mt-4">
-        <v-table fixed-header>
-            <thead>
-                <tr>
-                    <th v-for="header in headers" :key="header" class="text-left">
-                        {{ header }}
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="car in cars" :key="car.id" class="text-left">
-                    <td>{{ car.id }}.</td>
-                    <td>{{ car.brand?.name }}</td>
-                    <td>{{ car.model?.name }}</td>
-                    <td>{{ car.category?.name }}</td>
-                    <td>{{ $moment(car.createdAt).format("DD.MM.Y") }}</td>
-                    <td>
+        <DataTable :headers="headers">
+            <template #body>
+                <ctr v-for="(car, index) in cars" :key="car.id" class="text-left">
+                    <!---->
+                    <ctd>{{ `${index + 1 + carsPagination.size * (carsPagination.page - 1)} .` }}</ctd>
+                    <ctd>{{ car.brand?.name }}</ctd>
+                    <ctd>{{ car.model?.name }}</ctd>
+                    <ctd>{{ car.category?.name }}</ctd>
+                    <ctd>{{ $moment(car.createdAt).format("DD.MM.Y") }}</ctd>
+                    <ctd>
                         <div>
                             <DeleteConfimrationDialog :label="`Samochód : ${car.brand?.name} ${car.model?.name}`"
                                 @destroy="destroy(car.id)" />
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-        </v-table>
+                    </ctd>
+                </ctr>
+            </template>
+        </DataTable>
     </div>
 </template>
 
 <script>
 import DeleteConfimrationDialog from '../../ui/dialogs/DeleteConfimrationDialog.vue';
-//import DataTable from '../../ui/table/DataTable.vue';
+import DataTable from '../../ui/table/DataTable.vue';
 
 
 export default {
     components: {
         DeleteConfimrationDialog,
-        //  DataTable
+        DataTable
     },
     data() {
         return {
@@ -45,6 +39,9 @@ export default {
     computed: {
         cars() {
             return this.$store.getters.getCars;
+        },
+        carsPagination() {
+            return this.$store.getters.getCarsPagination
         }
     },
     methods: {

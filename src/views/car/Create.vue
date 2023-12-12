@@ -6,8 +6,8 @@
 </template>
     <!--To było list.vue-->
 <script>
-import Header from '../../components/instructor/create/Header.vue';
-import Create from '../../components/instructor/create/Create.vue';
+import Header from '../../components/car/create/Header.vue';
+import Create from '../../components/car/create/Create.vue';
 
 export default {
     components: {

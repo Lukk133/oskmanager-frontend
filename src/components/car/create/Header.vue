@@ -1,6 +1,6 @@
 <template>
     <div>
-        <ModuleTitle :icon="'instructor.svg'" :title="'INSTRUKTORZY'" :label="'Nowy Instruktor'"
+        <ModuleTitle :icon="'car.svg'" :title="'SAMOCHODY'" :label="'Nowy smaochód HALO'"
             :previousRoute="'InstructorsList'">
             <template #navigation>
                 <div class="ml-4 mb-2 mt-12 d-flex align-center">

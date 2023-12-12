@@ -3,14 +3,14 @@
         <v-table fixed-header>
             <thead>
                 <tr>
-                    <th v-for="header in headers" :key="header" class="text-center">
+                    <th v-for="header in headers" :key="header" class="text-left">
                         {{ header }}
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="car in cars" :key="car.id">
-                    <td>{{ car.id }}</td>
+                <tr v-for="(car, index) in cars" :key="car.id" class="text-left">
+                    <td>{{ index + 1 }}.</td>
                     <td>{{ car.brand?.name }}</td>
                     <td>{{ car.model?.name }}</td>
                     <td>{{ car.category?.name }}</td>
@@ -29,10 +29,13 @@
 
 <script>
 import DeleteConfimrationDialog from '../../ui/dialogs/DeleteConfimrationDialog.vue';
+//import DataTable from '../../ui/table/DataTable.vue';
+
 
 export default {
     components: {
-        DeleteConfimrationDialog
+        DeleteConfimrationDialog,
+        //  DataTable
     },
     data() {
         return {

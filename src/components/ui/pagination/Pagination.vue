@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex justify-space-between align-center">
         <div class="total-elements-label">
-            {{ `Zanleziono łącznie ${totalElements}` }}
+            {{ `Znaleziono łącznie ${totalElements}` }}
         </div>
         <div class="d-flex">
             <div class="mx-1">

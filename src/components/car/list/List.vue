@@ -9,8 +9,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(car, index) in cars" :key="car.id" class="text-left">
-                    <td>{{ index + 1 }}.</td>
+                <tr v-for="car in cars" :key="car.id" class="text-left">
+                    <td>{{ car.id }}.</td>
                     <td>{{ car.brand?.name }}</td>
                     <td>{{ car.model?.name }}</td>
                     <td>{{ car.category?.name }}</td>

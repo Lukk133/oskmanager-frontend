@@ -74,12 +74,11 @@ export default {
       console.log("params");
       await axios.get(URL_CARS, { params: params }).then((response) => {
         const data = response.data;
-        console.log(response.data.totalPages);
-        console.log(response.data);
-        console.log(response.data.length);
+        console.log(data.totalElements);
+        console.log(data.totalPages);
         commit("setCars", data);
         commit("setCarsTotalPages", data.totalPages);
-        commit("setCarsTotalElements", data.length);
+        commit("setCarsTotalElements", data.totalElements);
       });
     },
     getCar({ commit }, id) {

@@ -6,9 +6,9 @@
             </v-col>
         </v-row>
         <v-row>
-            <!-- <v-col>
-                <Filter @filter="listCars" />
-            </v-col>-->
+            <v-col>
+                <Filter @filterCars="listCars" />
+            </v-col>
         </v-row>
         <List @list="listCars" />
         <v-row class="mt-16">
@@ -19,14 +19,14 @@
     </v-container>
 </template>
 <script>
-//import Filter from '../../components/car/list/Filter.vue';
+import Filter from '../../components/car/list/Filter.vue';
 import List from '../../components/car/list/List.vue';
 import Header from '../../components/car/list/Header.vue';
 import Pagination from '../../components/car/list/Pagination.vue';
 
 export default {
     components: {
-        //    Filter,
+        Filter,
         List,
         Pagination,
         Header

@@ -21,6 +21,7 @@ export default {
         goToCreate() {
             const schoolId = this.$route.params.schoolId
             this.$router.push({ name: "CarCreate", params: { schoolId: schoolId } })
+
         }
     }
 

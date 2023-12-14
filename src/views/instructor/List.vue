@@ -64,6 +64,7 @@ export default {
         setSchoolId() {
             const schoolId = this.$route.params.schoolId;
             var instructorsParams = this.$store.getters.getInstructorsParams;
+            console.log(instructorsParams);
             instructorsParams.schoolId = schoolId;
             this.$store.commit("setInstructorsParams", instructorsParams);
         }

@@ -1,46 +1,46 @@
 <template>
     <div>
-        <ValidationSnackbar />
-        <v-dialog v-model="dialog" persistent max-width="600px">
-            <template v-slot:activator="">
-                <v-btn size="x-small" icon="mdi-plus" @click="open"> </v-btn>
-            </template>
-            <v-card>
-                <v-card-text>
-                    <v-container>
-                        <v-form ref="form" v-model="valid">
-                            <v-text-field v-model="car.color" label="Kolor" required></v-text-field>
-                            <v-text-field v-model="car.registration" label="Rejestracja"></v-text-field>
-                            <v-text-field v-model="car.vin" label="Vin"></v-text-field>
-
-                            <v-select :items="brands" item-value="id" item-title="name" label="Marka" v-model="car.brandId"
-                                required @update:model-value="setModelsParams">
-                            </v-select>
-                            <v-select :items="models" :disabled="models.length === 0" item-value="id" item-title="name"
-                                label="Model" v-model="car.modelId" required>
-                            </v-select>
-                            <v-select :items="gearboxes" item-value="id" item-title="name" label="Rodzaj skrzyni"
-                                v-model="car.gearboxId" required>
-                            </v-select>
-                        </v-form>
-                    </v-container>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="close">Zamknij</v-btn>
-                    <v-btn color="blue darken-1" text @click="save">Zapisz</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
+        <!--Awatar-->
+        <v-sheet>
+            <ValidationForm ref="form">
+                <TextInput :rules="['required', 'max']" :label="'Model'" :placeholder="'Podaj model samochodu'"
+                    v-model="car.model" ref="nameInput" />
+                <TextInput :rules="['required', 'max']" :label="'Marka'" :placeholder="'Podaj markę smochodu'"
+                    v-model="car.brand" ref="lastNameInput" />
+                <TextInput :rules="['required']" :label="'Kolor'" :placeholder="'Podaj kolor samochodu'" v-model="car.color"
+                    ref="lastNameInput" />
+                <TextInput :rules="['required']" :label="'Tablica rejestracyjna'"
+                    :placeholder="'Podaj tablicę rejestracyjną'" v-model="car.registration" ref="courseTypeInput" />
+                <TextInput :rules="['required']" :label="'Numer VIN'" :placeholder="'Podaj Numer VIN'" v-model="car.vin"
+                    ref="courseTypeInput" />
+                <SelectInput :items="instructors" :rules="['required']" v-model="car.instructor" ref="courseTypeInput"
+                    :title="'Przypisanie głównego instruktora'" />
+                <v-btn @click="createCar()" class="c-pointer mt-5">Dodaj samochód</v-btn>
+            </ValidationForm>
+        </v-sheet>
     </div>
 </template>
+<!--<template>
+    <div>
+        <ValidationSnackbar />
+    </div>
+</template>-->
 
 <script>
+import TextInput from "../../ui/inputs/TextInput.vue"
 import ValidationSnackbar from '../../ui/snackbars/ValidationSnackbar.vue';
+import AvatarInput from "../../ui/inputs/AvatarInput.vue"
+import ValidationForm from "../../ui/forms/ValidationForm.vue"
+import SelectInput from "../../ui/inputs/SelectInput.vue"
+import axios from "axios"
 
 export default {
     components: {
-        ValidationSnackbar
+        ValidationSnackbar,
+        AvatarInput,
+        ValidationForm,
+        SelectInput,
+        TextInput
     },
     data() {
         return {
@@ -49,8 +49,14 @@ export default {
         };
     },
     computed: {
+        categories() {
+            return this.$store.getters.getCategories
+        },
         car() {
             return this.$store.getters.getCar;
+        },
+        cars() {
+            return this.$store.getters.getCars;
         },
         models() {
             return this.$store.getters.getModels;
@@ -60,6 +66,9 @@ export default {
         },
         gearboxes() {
             return this.$store.getters.getGearboxes;
+        },
+        instructors() {
+            return this.$store.getters.getInstructors;
         }
     },
     methods: {
@@ -67,8 +76,6 @@ export default {
             if (this.$refs.form.validate()) {
                 await this.$store.dispatch("createCar")
                     .then(response => {
-                        this.$emit("created");
-                        this.close();
                     })
                     .catch(error => {
                         const message = error.message;
@@ -76,16 +83,45 @@ export default {
                     });
             }
         },
+        listCars() {
+            //  this.$store.commit("setCarsParams", params)
+            this.$store.dispatch("listCars")
+        },
+        listInstructors() {
+            this.$store.dispatch("listInstructors")
+        },
+        createCar() {
+            const params = {
+                model: this.car.model,
+                brand: {
+                    name: this.car.brand,
+                },
+                color: this.car.color,
+                registration: this.car.registration,
+                vin: this.car.vin,
+                brandId: 1,
+                categoryId: 1,
+                gearboxId: 1,
+                modelId: 2,
+                schoolId: this.$route.params.schoolId
+            }
+            console.log(params);
+            this.$store.commit("setCar", params)
+            this.$store.dispatch("createCar")
+            this.$store.commit("initCar")
+            // const pagination = this.$store.getters.getCarsPagination
+            // this.$router.push(`/${this.$route.params.schoolId}/cars?page=${pagination.page}&size=${pagination.size}`)
+        },
         showSnackbar(message) {
             this.$store.dispatch("showError", message);
         },
-        open() {
-            this.dialog = true;
-            this.init();
-        },
-        close() {
-            this.dialog = false;
-        },
+        /*    open() {
+                this.dialog = true;
+                this.init();
+            },
+            close() {
+                this.dialog = false;
+            },*/
         setModelsParams() {
             var params = this.$store.getters.getModelsParams
             params.brandId = this.car.brandId
@@ -105,12 +141,18 @@ export default {
             this.$store.dispatch("listGearboxes")
         },
         init() {
-            this.$store.commit("initCar");
-            this.initModelsParams()
-            this.listModels();
-            this.listBrands();
-            this.listGearboxes();
+
         }
     },
+    created() {
+        this.$store.commit("initCar");
+        this.$store.commit("setCarCreated", false);
+        this.listCars()
+        this.listInstructors()
+        this.initModelsParams()
+        this.listModels();
+        this.listBrands();
+        this.listGearboxes();
+    }
 };
 </script>

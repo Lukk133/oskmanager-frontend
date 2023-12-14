@@ -1,42 +1,47 @@
 <template>
     <div>
         <!--Awatar-->
-        <v-sheet>
-            <ValidationForm ref="form">
-                <TextInput :rules="['required', 'max']" :label="'Model'" :placeholder="'Podaj model samochodu'"
-                    v-model="car.model" ref="nameInput" />
-                <TextInput :rules="['required', 'max']" :label="'Marka'" :placeholder="'Podaj markę smochodu'"
-                    v-model="car.brand" ref="lastNameInput" />
-                <TextInput :rules="['required']" :label="'Kolor'" :placeholder="'Podaj kolor samochodu'" v-model="car.color"
-                    ref="lastNameInput" />
-                <TextInput :rules="['required']" :label="'Tablica rejestracyjna'"
-                    :placeholder="'Podaj tablicę rejestracyjną'" v-model="car.registration" ref="courseTypeInput" />
-                <TextInput :rules="['required']" :label="'Numer VIN'" :placeholder="'Podaj Numer VIN'" v-model="car.vin"
-                    ref="courseTypeInput" />
-                <SelectInput :items="instructors" :rules="['required']" v-model="car.instructor" ref="courseTypeInput"
-                    :title="'Przypisanie głównego instruktora'" />
-                <v-btn @click="createCar()" class="c-pointer mt-5">Dodaj samochód</v-btn>
-            </ValidationForm>
+        <v-sheet class="d-flex bg-solitude mt-8 ml-8">
+            <v-sheet class="bg-solitude" width="300">
+                <AvatarInput @changed="changedAvatar" :src="defaultSrc">
+                    <template #title>
+                        <div class="ml-4">
+                            <div class="avatar-title">{{ car.model }}</div>
+                            <div class="avatar-subtitle">{{ car.brand }}</div>
+                        </div>
+                    </template>
+                </AvatarInput>
+            </v-sheet>
+            <v-sheet>
+                <ValidationForm ref="form">
+                    <TextInput :rules="['required', 'max']" :label="'Model'" :placeholder="'Podaj model samochodu'"
+                        v-model="car.model" ref="nameInput" />
+                    <TextInput :rules="['required', 'max']" :label="'Marka'" :placeholder="'Podaj markę smochodu'"
+                        v-model="car.brand" ref="lastNameInput" />
+                    <TextInput :rules="['required']" :label="'Kolor'" :placeholder="'Podaj kolor samochodu'"
+                        v-model="car.color" ref="lastNameInput" />
+                    <TextInput :rules="['required']" :label="'Tablica rejestracyjna'"
+                        :placeholder="'Podaj tablicę rejestracyjną'" v-model="car.registration" ref="courseTypeInput" />
+                    <TextInput :rules="['required']" :label="'Numer VIN'" :placeholder="'Podaj Numer VIN'" v-model="car.vin"
+                        ref="courseTypeInput" />
+                    <SelectInput :items="instructors" :rules="['required']" v-model="car.instructor" ref="courseTypeInput"
+                        :title="'Przypisanie głównego instruktora'" />
+                    <v-btn @click="createCar()" class="c-pointer mt-5">Dodaj
+                        samochód</v-btn><!--placeholder bo nwm jak w headerze to zrobic-->
+                </ValidationForm>
+            </v-sheet>
         </v-sheet>
     </div>
 </template>
-<!--<template>
-    <div>
-        <ValidationSnackbar />
-    </div>
-</template>-->
 
 <script>
 import TextInput from "../../ui/inputs/TextInput.vue"
-import ValidationSnackbar from '../../ui/snackbars/ValidationSnackbar.vue';
 import AvatarInput from "../../ui/inputs/AvatarInput.vue"
 import ValidationForm from "../../ui/forms/ValidationForm.vue"
 import SelectInput from "../../ui/inputs/SelectInput.vue"
-import axios from "axios"
 
 export default {
     components: {
-        ValidationSnackbar,
         AvatarInput,
         ValidationForm,
         SelectInput,
@@ -140,9 +145,6 @@ export default {
         listGearboxes() {
             this.$store.dispatch("listGearboxes")
         },
-        init() {
-
-        }
     },
     created() {
         this.$store.commit("initCar");

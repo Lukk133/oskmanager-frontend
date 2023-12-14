@@ -1,33 +1,28 @@
 <template>
     <div class="mt-4">
-        <v-table fixed-header>
-            <thead>
-                <tr>
-                    <th v-for="header in headers" :key="header">
-                        {{ header }}
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(student, index) in students" :key="student.id">
-                    <td>{{ index + 1 }}.</td>
-                    <td>{{ `${student.name} ${student.lastName}` }}</td>
-                    <td>{{ $moment(student.createdAt).format('DD-MM-Y') }}</td>
-                    <td>
+        <DataTable :headers="headers">
+            <template #body>
+                <ctr v-for="(student, index) in students" :key="student.id">
+                    <ctd>{{ `${index + 1 + studentsPagination.size * (studentsPagination.page - 1)} .` }}</ctd>
+                    <ctd>{{ `${student.name} ${student.lastName}` }}</ctd>
+                    <ctd>{{ $moment(student.createdAt).format('DD-MM-Y') }}</ctd>
+                    <ctd>
                         <div>
                             <DeleteConfimrationDialog :label="`Szkołę : ${student.name}`" @destroy="destroy(student.id)" />
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-        </v-table>
+                    </ctd>
+                </ctr>
+            </template>
+        </DataTable>
     </div>
 </template>
 <script>
 import DeleteConfimrationDialog from '../../ui/dialogs/DeleteConfimrationDialog.vue';
+import DataTable from '../../ui/table/DataTable.vue';
 export default {
     components: {
-        DeleteConfimrationDialog
+        DeleteConfimrationDialog,
+        DataTable
     },
     data() {
         return {
@@ -37,6 +32,9 @@ export default {
     computed: {
         students() {
             return this.$store.getters.getStudents;
+        },
+        studentsPagination() {
+            return this.$store.getters.getStudentsPagination;
         }
     },
     methods: {

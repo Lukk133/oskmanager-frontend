@@ -28,7 +28,9 @@ export default {
             this.$store.dispatch("listCategories")
         },
         async save() {
+            console.log("HALO");
             if (this.$refs.create.validate()) {
+                console.log("HALO");
                 const schoolId = this.$route.params.schoolId
                 this.instructor.schoolId = schoolId
                 this.instructor.categoryId = this.instructor.category.id
@@ -43,7 +45,7 @@ export default {
                     .catch(error => {
                         const message = error.message
                     })
-            }
+            } else console.log("NIE");
         }
     },
     mounted() {

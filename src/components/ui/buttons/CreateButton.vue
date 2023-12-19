@@ -11,9 +11,10 @@
 export default {
     props: {
         label: {
-            default: "Zapisz zmiany"
+            default: "Zapisz nowy"
+            //  default: "Zapisz zmiany"
         }
-    }
+    },
 }
 </script>
 <style>

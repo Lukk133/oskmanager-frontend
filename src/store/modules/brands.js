@@ -20,6 +20,7 @@ export default {
                     commit("setBrands", brands);
                 })
                 .catch(error => {
+                    console.log(error);
                     console.error('Error fetching brands:', error);
                 });
         },

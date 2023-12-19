@@ -11,7 +11,7 @@
                     </template>
                 </AvatarInput>
             </v-sheet>
-            <v-sheet>
+            <v-sheet class="bg-solitude" width="300">
                 <ValidationForm ref="form">
                     <TextInput :rules="['required', 'max']" :label="'Imię'" :placeholder="'Podaj imię'"
                         v-model="student.name" ref="nameInput" />
@@ -87,63 +87,8 @@ export default {
         }
     },
     methods: {
-        createStudent() {
-            console.log(this.schoolId);
-            const params = {
-                email: this.student.email,
-                password: "Password123!",
-                pesel: this.student.pesel,
-                pkk: this.student.pkk,
-                name: this.student.name,
-                lastName: this.student.lastName,
-                phoneNumber: this.student.phoneNumber,
-                schoolId: this.schoolId
-            }
-            console.log(params);
-            this.$store.commit("setStudent", params)
-            this.$store.dispatch("createStudent", params)
-            this.$store.commit("initStudent")
-        },/*
-        courseTypeProps(courseType) {
-            return {
-                title: courseType.name,
-                subtitle: `${courseType.category?.name} ${courseType.gearbox?.name}   ${courseType.express ? "Ekspresowy" : "Zwykły"}`,
-            }
-        },
-        instructorProps(instructor) {
-            return {
-                title: `${instructor.name} ${instructor.lastName}`,
-                subtitle: instructor.numberOfCourses,
-            }
-        },*/
-        //nwm o co cho
-        async save() {
-            if (this.$refs.form.validate()) {
-                const schoolId = this.$route.params.schoolId
-                this.student.schoolId = schoolId
-                this.$store.dispatch("createStudent")
-                    .then(response => {
-                        if (response) {
-                            const studentId = response.data.user.id
-                            this.course.studentId = studentId;
-                            console.log(new Date())
-                            this.$store.dispatch("createCourse")
-                                .then(response => {
-                                    if (response) {
-                                        this.$emit("created")
-                                    }
-                                })
-                                .catch(error => {
-                                    const message = error.message
-                                    this.showSnackbar(message)
-                                })
-                        }
-                    })
-                    .catch(error => {
-                        const message = error.message
-                        this.showSnackbar(message)
-                    })
-            }
+        validate() {
+            return this.$refs.form.validate(this.$refs)
         },
         showSnackbar(message) {
             this.$store.dispatch("showError", message)
@@ -188,36 +133,3 @@ export default {
     }
 };
 </script>
-<!-- <ValidationSnackbar />
-        <v-dialog v-model="dialog" persistent max-width="600px">
-            <template v-slot:activator="">
-                <v-btn size="x-small" icon="mdi-plus" @click="open"> </v-btn>
-            </template>
-            <v-card>
-                <v-card-text>
-                    <v-container>
-                        <v-form ref="form" v-model="valid">
-                            <v-text-field v-model="student.name" :rules="nameRules" label="Name" required></v-text-field>
-                            <v-text-field v-model="student.lastName" :rules="lastNameRules" label="Last Name"
-                                required></v-text-field>
-                            <v-text-field v-model="student.email" :rules="emailRules" label="E-mail"
-                                required></v-text-field>
-                            <v-text-field v-model="student.phoneNumber" label="Phone Number" required></v-text-field>
-                            <v-text-field v-model="student.pesel" label="PESEL" required></v-text-field>
-                            <v-text-field v-model="student.pkk" label="PKK" required></v-text-field>
-                            <v-select :items="courseTypes" item-value="id" label="Kurs" v-model="course.courseTypeId"
-                                :item-props="courseTypeProps" @update:model-value="listInstructors"></v-select>
-                            <v-select :items="instructors" item-value="id" :item-props="instructorProps"
-                                label="Główny instruktor" :disabled="instructors.length === 0"
-                                v-model="course.mainInstructorId"></v-select>
-                            <DatePicker v-model="course.date" />
-                        </v-form>
-                    </v-container>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="close">Zamknij</v-btn>
-                    <v-btn color="blue darken-1" text @click="save">Zapsiz</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>-->

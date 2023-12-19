@@ -91,7 +91,7 @@ export default {
         },
         createCar({ getters, commit }) {
             const car = getters.getCar;
-
+            console.log(car);
             //   car.password = "password";
             return axios.post(URL_CARS, car)
         },

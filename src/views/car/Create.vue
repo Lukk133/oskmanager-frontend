@@ -29,18 +29,23 @@ export default {
         listCategories() {
             this.$store.dispatch("listCategories")
         },
+        redirect() {
+            this.$router.push({ name: "CarList", params: { schoolId: this.$route.params.schoolId } })
+        },
         async save() {
             if (this.$refs.create.validate()) {
                 const schoolId = this.$route.params.schoolId
+                this.car.modelId = this.car.model.id
+                this.car.brandId = this.car.brand.id
+                this.car.gearboxId = 1
                 this.car.schoolId = schoolId
-                this.car.categoryId = this.car.category.id
-                this.car.carId = this.car.car.id
+                this.car.categoryId = 1
+                // this.car.category.id
                 await this.$store.dispatch("createCar")
                     .then(response => {
-                        if (response) {
-                            const id = response.data.user.id
-                            this.$router.push({ name: "CarShow", params: { id: id, schoolId: schoolId } })
-                        }
+                        this.redirect()
+                        const id = response.data.user.id
+                        this.$router.push({ name: "CarList", params: { id: id, schoolId: schoolId } })
                     })
                     .catch(error => {
                         const message = error.message

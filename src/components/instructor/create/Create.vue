@@ -21,7 +21,7 @@
                         :placeholder="'Podaj numer telefonu'" v-model="instructor.phoneNumber" ref="phoneNumberInput" />
                     <TextInput :label="'E-mail'" :rules="['required', 'email']" :placeholder="'Podaj e-mail'"
                         v-model="instructor.email" ref="emailInput" />
-
+                    <!--cos jest nie tak z rulesami email i phone number-->
                     <SelectInput :items="categories" v-model="instructor.category" :rules="['required']"
                         ref="courseTypeInput" @update:model-value="listCars" :title="'Wybierz kategorię'" />
                     <SelectInput :disabled="cars.length == 0" :items="cars" v-model="instructor.car" :rules="['required']"

@@ -28,18 +28,21 @@ export default {
         listCategories() {
             this.$store.dispatch("listCategories")
         },
+        redirect() {
+            this.$router.push({ name: "StudentList", params: { schoolId: this.$route.params.schoolId } })
+        },
         async save() {
             if (this.$refs.create.validate()) {
                 const schoolId = this.$route.params.schoolId
                 this.student.schoolId = schoolId
-                this.student.categoryId = this.student.category.id
-                this.student.carId = this.student.car.id
+                this.student.password = "123"
+                //      this.student.categoryId = this.student.category.id
+                //    this.student.carId = this.student.car.id
                 await this.$store.dispatch("createStudent")
                     .then(response => {
-                        if (response) {
-                            const id = response.data.user.id
-                            this.$router.push({ name: "StudentShow", params: { id: id, schoolId: schoolId } })
-                        }
+                        this.redirect()
+                        const id = response.data.user.id
+                        this.$router.push({ name: "StudentShow", params: { id: id, schoolId: schoolId } })
                     })
                     .catch(error => {
                         const message = error.message

@@ -82,6 +82,7 @@ export default {
             axios
                 .get(`${URL_CARS}/${id}`)
                 .then((response) => {
+                    console.log(response);
                     const car = response.data;
                     commit("setCar", car);
                 })

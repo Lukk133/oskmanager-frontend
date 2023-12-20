@@ -4,7 +4,9 @@
             <template #body>
                 <ctr v-for="(student, index) in students" :key="student.id">
                     <ctd>{{ `${index + 1 + studentsPagination.size * (studentsPagination.page - 1)} .` }}</ctd>
-                    <ctd>{{ `${student.name} ${student.lastName}` }}</ctd>
+                    <ctd class="d-flex align-center c-pointer" @click="goTo(student.id)">
+                        <ctd>{{ `${student.name} ${student.lastName}` }}</ctd>
+                    </ctd>
                     <ctd>{{ $moment(student.createdAt).format('DD-MM-Y') }}</ctd>
                     <ctd>
                         <div>
@@ -38,6 +40,9 @@ export default {
         }
     },
     methods: {
+        goTo(id) {
+            this.$router.push({ name: "StudentShow", params: { id: id } })
+        },
         async destroy(id) {
             await this.$store.dispatch("deleteStudent", id)
             this.$emit("list")

@@ -84,6 +84,19 @@ export default {
             const student = state.getters.getStudent;
             return axios.post(URL_STUDENTS, student);
         },
+        getStudent({ commit }, id) {
+            console.log(id);
+            axios
+                .get(`${URL_STUDENTS}/${id}`)
+                .then((response) => {
+                    console.log(response);
+                    const student = response.data;
+                    commit("setStudent", student);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
         async deleteStudent(state, id) {
             await axios.delete(URL_STUDENTS + `/${id}`).then((response) => {
                 console.log(response);

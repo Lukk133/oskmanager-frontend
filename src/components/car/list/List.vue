@@ -5,7 +5,9 @@
                 <ctr v-for="(car, index) in cars" :key="car.id" class="text-left">
                     <!---->
                     <ctd>{{ `${index + 1 + carsPagination.size * (carsPagination.page - 1)} .` }}</ctd>
-                    <ctd>{{ car.brand?.name }}</ctd>
+                    <ctd class="d-flex align-center c-pointer" @click="goTo(car.id)">
+                        <ctd>{{ car.brand?.name }}</ctd>
+                    </ctd>
                     <ctd>{{ car.model?.name }}</ctd>
                     <ctd>{{ car.category?.name }}</ctd>
                     <ctd>{{ $moment(car.createdAt).format("DD.MM.Y") }}</ctd>
@@ -45,6 +47,9 @@ export default {
         }
     },
     methods: {
+        goTo(id) {
+            this.$router.push({ name: "CarShow", params: { id: id } })
+        },
         async destroy(id) {
             await this.$store.dispatch("deleteCar", id);
             this.$emit("list");

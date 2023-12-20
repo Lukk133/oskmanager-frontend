@@ -7,11 +7,14 @@ import SchoolCalendar from "./views/calendar/Calendar.vue";
 import SchoolSettings from "./views/school/Settings.vue";
 import StudentList from "./views/student/List.vue";
 import StudentCreate from "./views/student/Create.vue";
+import StudentShow from "./views/student/Show.vue";
 import InstructorList from "./views/instructor/List.vue";
 import InstructorCreate from "./views/instructor/Create.vue";
+import InstructorShow from "./views/instructor/Show.vue";
 import CarList from "./views/car/List.vue";
 import CarCreate from "./views/car/Create.vue";
-import InstructorShow from "./views/instructor/Show.vue";
+import CarShow from "./views/car/Show.vue";
+
 import store from "./store";
 
 const routes = [
@@ -59,6 +62,14 @@ const routes = [
         },
     },
     {
+        name: "StudentShow",
+        path: "/:schoolId/student/:id",
+        component: StudentShow,
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
         name: "InstructorCreate",
         path: "/:schoolId/instructors/create",
         component: InstructorCreate,
@@ -92,6 +103,14 @@ const routes = [
         name: "CarCreate",
         path: "/:schoolId/cars/create",
         component: CarCreate,
+        meta: {
+            requiresAuth: true,
+        },
+    },
+    {
+        name: "CarShow",
+        path: "/:schoolId/cars/:id",
+        component: CarShow,
         meta: {
             requiresAuth: true,
         },

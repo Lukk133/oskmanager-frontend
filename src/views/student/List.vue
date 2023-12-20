@@ -60,7 +60,7 @@ export default {
             if (queryParams.size) {
                 pagination.size = parseInt(queryParams.size);
             }
-            this.$store.commit("setCarsPagination", pagination);
+            this.$store.commit("setStudentsPagination", pagination);
         },
         setSchoolId() {
             const schoolId = this.$route.params.schoolId;

@@ -93,6 +93,7 @@ export default {
         },
         createInstructor({ getters }) {
             const instructor = getters.getInstructor;
+            console.log(instructor);
             instructor.password = "password";
             return axios.post(URL_INSTRUCTORS, instructor);
         },

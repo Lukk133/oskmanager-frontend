@@ -28,11 +28,10 @@ export default {
             this.$store.dispatch("listCategories")
         },
         async save() {
-            console.log("HALO");
             if (this.$refs.create.validate()) {
                 console.log("HALO");
                 const schoolId = this.$route.params.schoolId
-                this.instructor.schoolId = schoolId
+                this.instructor.schoolId = parseInt(schoolId)
                 this.instructor.categoryId = this.instructor.category.id
                 this.instructor.carId = this.instructor.car.id
                 await this.$store.dispatch("createInstructor")

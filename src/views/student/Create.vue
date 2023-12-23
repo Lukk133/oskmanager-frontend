@@ -25,9 +25,6 @@ export default {
         initStudent() {
             this.$store.commit("initStudent")
         },
-        listCategories() {
-            this.$store.dispatch("listCategories")
-        },
         redirect() {
             this.$router.push({ name: "StudentList", params: { schoolId: this.$route.params.schoolId } })
         },
@@ -53,7 +50,6 @@ export default {
     mounted() {
         this.initFileInfo()
         this.initStudent()
-        this.listCategories()
     }
 }
 </script>

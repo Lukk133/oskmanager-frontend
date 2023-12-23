@@ -44,7 +44,7 @@ export default {
                 required: value => !!value || 'Pole jest wymagane',
                 max: value => (value && value.length <= 10) || `${this.label} must be less than 10 characters`,
                 email: value => /.+@.+\..+/.test(value) || 'Invalid email',
-                phoneNumber: value => /^(\+\d{1,3}[- ]?)?\d{10}$/.test(value) || 'Invalid phone number',
+                phoneNumber: value => /^(\+\d{1,3}[- ]?)?\d{9}$/.test(value) || 'Invalid phone number',
 
             },
             changed: false,

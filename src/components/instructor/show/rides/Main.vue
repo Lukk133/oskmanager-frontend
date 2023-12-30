@@ -1,10 +1,20 @@
 <template>
     <div>
-        {{ rides }}
+        <RidesFilter />
+        <RidesList />
+        <RidesData />
     </div>
 </template>
 <script>
+import RidesFilter from './Filter.vue';
+import RidesList from './List.vue';
+import RidesData from './Data.vue';
 export default {
+    components: {
+        RidesFilter,
+        RidesList,
+        RidesData
+    },
     computed: {
         instructor() {
             return this.$store.getters.getInstructor

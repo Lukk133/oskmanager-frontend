@@ -2,7 +2,7 @@
 
 <template>
     <div>
-        <ModuleTitle :icon="'instructor.svg'" :title="'INSTRUKTORZY'" :label="'Nowy Instruktor'"
+        <ModuleTitle :icon="'instructor.svg'" :title="'INSTRUKTORZY'" :label="`${instructor?.name} ${instructor?.lastName}`"
             :previousRoute="'InstructorsList'">
             <template #navigation>
                 <Navigation class="mt-12" />
@@ -24,6 +24,11 @@ export default {
         CreateButton,
         Navigation,
         AdditionalActions
+    },
+    computed: {
+        instructor() {
+            return this.$store.getters.getInstructor
+        }
     },
     methods: {
         save() {

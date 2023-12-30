@@ -12,7 +12,7 @@
 import Header from '../../components/instructor/Show/Header.vue'
 import Main from '../../components/instructor/Show/Main.vue'
 import Documents from '../../components/instructor/Show/Documents.vue'
-import Rides from '../../components/instructor/Show/Rides.vue'
+import Rides from '../../components/instructor/Show/rides/Main.vue'
 export default {
     components: {
         Header,

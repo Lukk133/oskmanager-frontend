@@ -1,8 +1,10 @@
 <template>
-    <div>
+    <div class="rides-container">
         <RidesFilter />
-        <RidesList />
-        <RidesData />
+        <div class="rides-content">
+            <RidesList />
+            <RidesData />
+        </div>
     </div>
 </template>
 <script>
@@ -42,3 +44,13 @@ export default {
     }
 }
 </script>
+<style>
+.rides-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.rides-content {
+    display: flex;
+}
+</style>

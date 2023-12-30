@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-4" style="max-width: 60%">
+    <div class="mt-n3 rides-list" style="max-width: 60%">
         <DataTable :headers="headers">
             <template #body>
                 <ctr v-for="(ride, index) in rides" :key="ride.id" class="text-left c-pointer"
@@ -76,10 +76,10 @@ export default {
 <style scoped>
 .selected-row {
     background-color: #E8ECF4;
-    /*           "background": "#E8ECF4",
-        "solitude": "#F5F7FA",
-        "arsenic": "#41494E",
-        "forsetGreen": "#2A9A2F",
-        "atomic": "#3C4B52" */
+}
+
+.rides-list {
+    flex: 1;
+    margin-right: 16px
 }
 </style>

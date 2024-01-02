@@ -15,18 +15,24 @@ export default {
             type: String,
             required: true
         },
-        buttonClass: String
+        buttonClass: String,
+        modelValue: String,
     },
     computed: {
         buttonClass() {
             return this.buttonClass;
+        },
+        isSelected() {
+            return this.value === this.modelValue;
         }
     },
     methods: {
         updateFilter() {
             this.$emit('updateFilter', this.value);
+            this.$emit('update:modelValue', this.value);
             this.isSelected = !this.isSelected;
-        }
+        },
+
     }
 };
 </script>
@@ -48,7 +54,6 @@ export default {
 }
 
 .selected {
-    background-color: black;
-    color: black
+    background-color: #41494E;
 }
 </style>

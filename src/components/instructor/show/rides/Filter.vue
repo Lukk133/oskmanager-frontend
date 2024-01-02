@@ -7,13 +7,13 @@
     <div class="d-flex">
         <v-sheet class="pa-2 ma-2 d-flex bg-solitude ml-3">
             <FilterButton v-for="(filter, index) in timeFilters" :key="filter.label" :label="filter.label"
-                :value="filter.value" :buttonClass="filter.class" :class="{ 'selected-row': index === selectedRowIndex }"
-                @updateFilter="handleUpdateFilter" />
+                :modelValue="selectedTimeFilter" :value="filter.value" :buttonClass="filter.class"
+                :class="{ 'selected-row': index === selectedRowIndex }" @updateFilter="handleTimeFilter" />
 
         </v-sheet>
         <v-sheet class="pa-2 ma-2 d-flex bg-solitude ml-3">
             <FilterButton v-for="filter in dateFilters" :key="filter.label" :label="filter.label" :value="filter.value"
-                :buttonClass="filter.class" @updateFilter="handleUpdateFilter" />
+                :buttonClass="filter.class" :modelValue="selectedDateFilter" @updateFilter="handleDateFilter" />
         </v-sheet>
     </div>
 </template>
@@ -59,12 +59,12 @@ export default {
             return [
                 {
                     label: "Najnowsze",
-                    value: "ASC",
+                    value: "asc",
                     class: "left-button"
                 },
                 {
                     label: "Najstarsze",
-                    value: "DESC",
+                    value: "desc",
                     class: "right-button"
                 },
             ]
@@ -72,19 +72,29 @@ export default {
     },
     data() {
         return {
-            selectedFilter: null,
+            selectedTimeFilter: null,
+            selectedDateFilter: null,
             selectedRowIndex: null,
         };
     },
     methods: {
-        handleUpdateFilter(value) {
-            this.selectedFilter = value
-            this.$emit("updateFilter", value)
-            this.$store.commit("setRidesParams", value)
-            console.log('hlao');
-            console.log(value);
-            //this.$store.commit("")
+        listRides() {
+            this.$store.dispatch("listRides")
         },
+        handleTimeFilter(value) {
+            this.selectedTimeFilter = value
+            this.$emit("updateFilter", value)
+            this.$store.commit("setRidesParams", { dateRange: value })
+            this.listRides
+        },
+        handleDateFilter(value) {
+            this.selectedDateFilter = value
+            this.$emit("updateFilter", value)
+            this.$store.commit("setRidesParams", { sortByDate: value })
+            console.log(this.$store.getters.getRidesParams);
+            this.listRides
+        },
+
         save() {
             this.$emit("save");
         },

@@ -1,48 +1,50 @@
 <template>
-    <v-container class="koks bg-grey" style="max-width: 28%">
-        <v-row class="mt-n6">
-            <v-col>
-                {{ formatDateDay(ride.startDate) }}
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col>
-                {{ ride.instructor.name }}, {{ ride.instructor.lastName }}
-            </v-col>
-        </v-row>
-        <v-row class="mt-n3">
-            <v-col>
-                {{ ride?.car?.brand?.name }}, {{ ride?.car?.model?.name }} {{ ride?.car?.registration }}
-            </v-col>
-        </v-row>
-        <v-row class="mt-n3">
-            <v-col>
-                {{ formatDateHours(ride.startDate, ride.endDate) }}
-            </v-col>
-        </v-row>
-        <v-row class="mt-n3">
-            <v-col>
-                Lokalizacja domyślna
-            </v-col>
-        </v-row>
-        <v-row class="mt-n3">
-            <v-col>
-                Odwołaj jazdę
-                <DeleteConfimrationDialog :label="`tą jazdę`" @destroy="destroy(ride.id)" />
-            </v-col>
-        </v-row>
-    </v-container>
+    <div class="d-flex rounded-lg flex-column frame">
+        <!--margines tło, margines miedzy data i list-->
+        <div class="mb-6">
+            {{ formatDateDay(ride.startDate) }}
+        </div>
+        <div class="subtitle">
+            Kursant
+        </div>
+        <div class="mb-2">
+            <StudentItem :student="ride.course.student" />
+        </div>
+        <div class="subtitle">
+            Samochód
+        </div>
+        <div class="mb-2">
+            {{ ride?.car?.brand?.name }}, {{ ride?.car?.model?.name }} {{ ride?.car?.registration }}
+        </div>
+        <div class="subtitle">
+            Godziny Jazd
+        </div>
+        <div class="mb-2">
+            {{ formatDateHours(ride.startDate, ride.endDate) }}
+        </div>
+        <div class="subtitle">
+            Lokalizacja domyślna
+        </div>
+        <div class="cancel-ride bg-solitude rounded-lg">
+            <div class="cancel-ride-title mr-4"></div>
+            <div class="pr-4" style="color: red">Odwołaj jazdę</div>
+
+            <DeleteConfimrationDialog :label="`tą jazdę`" @destroy="destroy(ride.id)" />
+        </div>
+    </div>
 </template>
 
 <script>
 import DeleteConfimrationDialog from '../../../ui/dialogs/DeleteConfimrationDialog.vue';
 import AvatarInput from '../../../ui/inputs/AvatarInput.vue';
+import StudentItem from '../../../ui/student/StudentItem.vue';
 
 
 export default {
     components: {
         DeleteConfimrationDialog,
         AvatarInput,
+        StudentItem
     },
     computed: {
         ride() {
@@ -90,8 +92,40 @@ export default {
 }
 </script>
 <style>
-.koks {
+.frame {
+    background-color: #FFF;
+    font-family: rubik;
+    width: 597px;
+    height: 350px;
+    top: 445px;
+    left: 1239px;
+    border-radius: 12px;
+    padding: 20px;
     position: fixed;
-    right: 100px;
+}
+
+.subtitle {
+    font-weight: 400;
+    color: #707070;
+    font-size: 12px;
+}
+
+.cancel-ride {
+    width: 311px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    /* Align text vertically in the middle */
+}
+
+.cancel-ride-title {
+    width: 50px;
+    height: 12px;
+    margin-right: 50px;
+    /* Adjust the right margin to move the text more to the right */
+    font-family: 'Rubik', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16.59px;
 }
 </style>

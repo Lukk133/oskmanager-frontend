@@ -3,8 +3,8 @@
         <AvatarImg :obj="student" :width="width" :height="height" />
         <div class="ml-2">
             <div class="label">
-                {{ student.name }}
-                {{ student.lastName }}
+                {{ student?.name }}
+                {{ student?.lastName }}
             </div>
             <div class="sub-label" v-if="additionalInfo">
                 {{ additionalInfo }}

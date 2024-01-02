@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-n3 rides-list" style="max-width: 60%">
+    <div class="mt-n3 rides-list" style="max-width: 57%"><!--Dodać że route params id do jazd-->
         <DataTable :headers="headers">
             <template #body>
                 <ctr v-for="(ride, index) in rides" :key="ride.id" class="text-left c-pointer"
@@ -7,9 +7,8 @@
                     <!---->
                     <ctd>{{ formatDate(ride.startDate, ride.endDate) }} </ctd>
                     <ctd>Lokalizacja domyślna</ctd>
-                    <AvatarInput />
                     <ctd>
-                        {{ ride.instructor.name }}, {{ ride.instructor.lastName }} 3/30
+                        <StudentItem :student="ride.course.student" />
                     </ctd>
                     <ctd>{{ ride.car.brand.name }} {{ ride.car.model.name }} {{ ride.car.registration }}</ctd>
                 </ctr>
@@ -21,14 +20,13 @@
 <script>
 import DeleteConfimrationDialog from '../../../ui/dialogs/DeleteConfimrationDialog.vue';
 import DataTable from './Table.vue';
-import AvatarInput from '../../../ui/inputs/AvatarInput.vue';
-
+import StudentItem from '../../../ui/student/StudentItem.vue';
 
 export default {
     components: {
         DeleteConfimrationDialog,
         DataTable,
-        AvatarInput
+        StudentItem,
     },
     data() {
         return {
@@ -40,15 +38,15 @@ export default {
             return this.$store.getters.getRides;
         },
         ridesPagination() {
-            return this.$store.getters.getRidesPagination
-        }
+            return this.$store.getters.getRidesPagination;
+        },
     },
     methods: {
         goTo(id) {
-            this.$router.push({ name: "CarsShow", params: { id: id } })
+            this.$router.push({ name: 'CarsShow', params: { id: id } });
         },
         setSelectedRide(ride, index) {
-            this.$store.commit("setRide", ride);
+            this.$store.commit('setRide', ride);
             this.selectedRowIndex = index;
             console.log(this.$store.getters.getRide);
         },
@@ -66,20 +64,33 @@ export default {
             const endMinutes = ('0' + endDate.getMinutes()).slice(-2);
 
             return `${startDay}.${startMonth}.${startYear} ${startHours}:${startMinutes}-${endHours}:${endMinutes}`;
-        }
+        },
+        async selectTopRow() {
+            this.$nextTick(() => {
+                if (this.rides.length > 0) {
+                    this.$store.commit('setRide', this.rides[0]);
+                    console.log(this.rides[0]);
+                    this.selectedRowIndex = 0;
+                }
+            });
+        },
+    },
+    watch: {
+        rides: 'selectTopRow',
     },
     mounted() {
-        this.$store.dispatch("listRides")
-    }
-}
+        this.$store.dispatch('listRides');
+    },
+};
 </script>
+
 <style scoped>
 .selected-row {
-    background-color: #E8ECF4;
+    background-color: #e8ecf4;
 }
 
 .rides-list {
     flex: 1;
-    margin-right: 16px
+    margin-right: 16px;
 }
 </style>

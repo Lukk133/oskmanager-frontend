@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-n3 rides-list" style="max-width: 57%"><!--Dodać że route params id do jazd-->
+    <div class="mt-n3 rides-list" style="max-width: 57%">
         <DataTable>
             <template #body>
                 <ctr v-for="(ride, index) in rides" :key="ride.id" class="text-left c-pointer"
@@ -19,7 +19,7 @@
 
 <script>
 import DeleteConfimrationDialog from '../../../ui/dialogs/DeleteConfimrationDialog.vue';
-import DataTable from './Table.vue';
+import DataTable from '../../../instructor/show/rides/Table.vue';
 import StudentItem from '../../../ui/student/StudentItem.vue';
 
 export default {

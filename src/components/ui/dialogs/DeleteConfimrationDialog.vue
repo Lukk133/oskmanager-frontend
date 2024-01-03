@@ -26,6 +26,9 @@ export default {
     props: {
         label: {
             required: true
+        },
+        icon: {
+            default: "mdi-trash-can"
         }
     },
     data() {

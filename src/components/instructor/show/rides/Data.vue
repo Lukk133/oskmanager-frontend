@@ -1,50 +1,53 @@
 <template>
-    <div class="d-flex rounded-lg flex-column frame">
-        <!--margines tło, margines miedzy data i list-->
-        <div class="mb-6">
+    <v-sheet class="d-flex rounded-lg flex-column frame bg-white pa-5" width="645" height="350">
+        <div class="mb-6 title">
             {{ formatDateDay(ride.startDate) }}
         </div>
         <div class="subtitle">
             Kursant
         </div>
-        <div class="mb-2">
-            <StudentItem :student="ride.course.student" />
-        </div>
+        <StudentItem :student="ride.course.student" class="mb-2" />
         <div class="subtitle">
             Samochód
         </div>
-        <div class="mb-2">
+        <CarItem :car="ride.car" class="mb-2" />
+        <!--<div class="mb-2">
             {{ ride?.car?.brand?.name }}, {{ ride?.car?.model?.name }} {{ ride?.car?.registration }}
-        </div>
+        </div>-->
         <div class="subtitle">
             Godziny Jazd
         </div>
         <div class="mb-2">
             {{ formatDateHours(ride.startDate, ride.endDate) }}
         </div>
-        <div class="subtitle">
-            Lokalizacja domyślna
+        <div class="subtitle mb-2">
+            Lokalizacja
         </div>
-        <div class="cancel-ride bg-solitude rounded-lg">
-            <div class="cancel-ride-title mr-4"></div>
-            <div class="pr-4" style="color: red">Odwołaj jazdę</div>
-
-            <DeleteConfimrationDialog :label="`tą jazdę`" @destroy="destroy(ride.id)" />
-        </div>
-    </div>
+        <v-sheet class="cancel-ride bg-solitude rounded-lg center align-center d-flex" width="311" height="60"
+            style="font-size: 15px;">
+            <div></div>
+            <v-icon class="icon ml-5 mr-3" size="small" color="red" icon="mdi-calendar" />
+            <div class="pr-16" style="color: red">Odwołaj jazdę</div>
+            <div class="ml-13">
+                <DeleteConfimrationDialog :label="`tą jazdę`" :icon="''" @destroy="destroy(ride.id)" />
+            </div>
+        </v-sheet>
+    </v-sheet>
 </template>
 
 <script>
 import DeleteConfimrationDialog from '../../../ui/dialogs/DeleteConfimrationDialog.vue';
 import AvatarInput from '../../../ui/inputs/AvatarInput.vue';
 import StudentItem from '../../../ui/student/StudentItem.vue';
+import CarItem from '../../../ui/car/CarItem.vue';
 
 
 export default {
     components: {
         DeleteConfimrationDialog,
         AvatarInput,
-        StudentItem
+        StudentItem,
+        CarItem
     },
     computed: {
         ride() {
@@ -90,18 +93,11 @@ export default {
         this.$store.dispatch("listRides")
     }
 }
+
 </script>
 <style>
 .frame {
-    background-color: #FFF;
     font-family: rubik;
-    width: 597px;
-    height: 350px;
-    top: 445px;
-    left: 1239px;
-    border-radius: 12px;
-    padding: 20px;
-    position: fixed;
 }
 
 .subtitle {
@@ -110,22 +106,9 @@ export default {
     font-size: 12px;
 }
 
-.cancel-ride {
-    width: 311px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    /* Align text vertically in the middle */
-}
-
-.cancel-ride-title {
-    width: 50px;
-    height: 12px;
-    margin-right: 50px;
-    /* Adjust the right margin to move the text more to the right */
-    font-family: 'Rubik', sans-serif;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 16.59px;
+.title {
+    font-weight: 700;
+    font-family: Encode Sans Expanded;
+    font-size: 20px;
 }
 </style>

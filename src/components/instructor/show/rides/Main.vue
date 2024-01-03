@@ -34,13 +34,13 @@ export default {
         },
         initRides() {
             this.$store.commit("initRidesParams")
-            this.ridesParams.schoolId = this.$route.params.schoolId
+            const id = this.$route.params.id
             this.ridesParams.instructorId = this.instructor.id
+            this.listRides()
         },
     },
     mounted() {
         this.initRides()
-        this.listRides()
     }
 }
 </script>

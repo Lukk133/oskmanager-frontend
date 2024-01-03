@@ -63,7 +63,9 @@ export default {
             const endHours = ('0' + endDate.getHours()).slice(-2);
             const endMinutes = ('0' + endDate.getMinutes()).slice(-2);
 
-            return `${startDay}.${startMonth}.${startYear} ${startHours}:${startMinutes}-${endHours}:${endMinutes}`;
+            const formattedHours = `<span class="highlighted-hours">${startHours}:${startMinutes}-${endHours}:${endMinutes}</span>`;
+
+            return `${startDay}.${startMonth}.${startYear} ${formattedHours}`.replace(/<\/?span[^>]*>/g, '');
         },
         async selectTopRow() {
             this.$nextTick(() => {
@@ -92,5 +94,9 @@ export default {
 .rides-list {
     flex: 1;
     margin-right: 16px;
+}
+
+.highlighted-hours {
+    font-weight: bold;
 }
 </style>

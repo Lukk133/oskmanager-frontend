@@ -7,13 +7,13 @@
     <div class="d-flex">
         <v-sheet class="pa-2 ma-2 d-flex bg-solitude ml-3">
             <FilterButton v-for="(filter, index) in timeFilters" :key="filter.label" :label="filter.label"
-                :modelValue="selectedTimeFilter" :value="filter.value" :buttonClass="filter.class"
+                :modelValue="ridesParams.dateRange" :value="filter.value" :buttonClass="filter.class"
                 :class="{ 'selected-row': index === selectedRowIndex }" @updateFilter="handleTimeFilter" />
 
         </v-sheet>
         <v-sheet class="pa-2 ma-2 d-flex bg-solitude ml-3">
             <FilterButton v-for="filter in dateFilters" :key="filter.label" :label="filter.label" :value="filter.value"
-                :buttonClass="filter.class" :modelValue="selectedDateFilter" @updateFilter="handleDateFilter" />
+                :buttonClass="filter.class" :modelValue="ridesParams.sortByDate" @updateFilter="handleDateFilter" />
         </v-sheet>
     </div>
 </template>
@@ -34,6 +34,9 @@ export default {
         },
     },
     computed: {
+        ridesParams() {
+            return this.$store.getters.getRidesParams;
+        },
         instructor() {
             return this.$store.getters.getInstructor;
         },
@@ -60,20 +63,18 @@ export default {
                 {
                     label: "Najnowsze",
                     value: "asc",
-                    class: "left-button"
+                    class: "newest-button"
                 },
                 {
                     label: "Najstarsze",
                     value: "desc",
-                    class: "right-button"
+                    class: "oldest-button"
                 },
             ]
         },
     },
     data() {
         return {
-            selectedTimeFilter: null,
-            selectedDateFilter: null,
             selectedRowIndex: null,
         };
     },
@@ -82,17 +83,18 @@ export default {
             this.$store.dispatch("listRides")
         },
         handleTimeFilter(value) {
-            this.selectedTimeFilter = value
-            this.$emit("updateFilter", value)
-            this.$store.commit("setRidesParams", { dateRange: value })
-            this.listRides
+            if (this.ridesParams.dateRange === value) {
+                this.ridesParams.dateRange = null
+            } else { this.ridesParams.dateRange = value }
+            console.log(this.$store.getters.getRidesParams);
+            this.listRides()
         },
         handleDateFilter(value) {
-            this.selectedDateFilter = value
-            this.$emit("updateFilter", value)
-            this.$store.commit("setRidesParams", { sortByDate: value })
+            if (this.ridesParams.sortByDate === value) {
+                this.ridesParams.sortByDate = null
+            } else { this.ridesParams.sortByDate = value }
             console.log(this.$store.getters.getRidesParams);
-            this.listRides
+            this.listRides()
         },
 
         save() {
@@ -110,7 +112,17 @@ export default {
     border-radius: 20px 0 0 20px;
 }
 
+.newest-button {
+    border-radius: 20px 0 0 20px;
+    width: 110px;
+}
+
 .right-button {
     border-radius: 0 20px 20px 0;
+}
+
+.oldest-button {
+    border-radius: 0 20px 20px 0;
+    width: 108px;
 }
 </style>

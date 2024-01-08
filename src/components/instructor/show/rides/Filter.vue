@@ -9,7 +9,6 @@
             <FilterButton v-for="(filter, index) in timeFilters" :key="filter.label" :label="filter.label"
                 :modelValue="ridesParams.dateRange" :value="filter.value" :buttonClass="filter.class"
                 :class="{ 'selected-row': index === selectedRowIndex }" @updateFilter="handleTimeFilter" />
-
         </v-sheet>
         <v-sheet class="pa-2 ma-2 d-flex bg-solitude ml-3">
             <FilterButton v-for="filter in dateFilters" :key="filter.label" :label="filter.label" :value="filter.value"
@@ -62,12 +61,12 @@ export default {
             return [
                 {
                     label: "Najnowsze",
-                    value: "asc",
+                    value: "desc",
                     class: "newest-button"
                 },
                 {
                     label: "Najstarsze",
-                    value: "desc",
+                    value: "asc",
                     class: "oldest-button"
                 },
             ]

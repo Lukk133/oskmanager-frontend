@@ -10,10 +10,10 @@ export default {
             default: null
         },
         width: {
-            default: 42
+            default: 30
         },
         height: {
-            default: 42
+            default: 30
         }
     },
     computed: {

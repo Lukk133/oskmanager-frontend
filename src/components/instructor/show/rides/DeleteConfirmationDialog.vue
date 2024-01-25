@@ -1,7 +1,8 @@
 <template>
-    <v-dialog v-model="dialog" width="388" height="168">
+    <v-dialog v-model="dialog" width="500">
         <template v-slot:activator="">
             <v-btn size="x-small" :src="src" :icon="icon" @click="open">
+                <div v-html="icon"></div>
             </v-btn>
         </template>
 
@@ -12,7 +13,7 @@
 
             <v-card-actions class="d-flex align-center justify-center">
                 <v-btn @click="destroy" width="195" class="bg-atomic delete-button" height="48"><!--width=188-->
-                    <img src="../../../assets/icons/trash-can.svg" class="mr-2" /> <!--inaczej nwm jak do konca-->
+                    <img src="../../../../assets/icons/trash-can.svg" class="mr-2" /> <!--inaczej nwm jak do konca-->
                     <span class="confirm-delete">Tak</span>, chcę usunąć
                 </v-btn>
             </v-card-actions>
@@ -20,11 +21,7 @@
     </v-dialog>
 </template>
 <script>
-import Icon from "../../ui/icons/Icon.vue"
 export default {
-    components: {
-        Icon
-    },
     props: {
         label: {
             required: true
@@ -36,7 +33,6 @@ export default {
     data() {
         return {
             dialog: false,
-
         }
     },
     methods: {

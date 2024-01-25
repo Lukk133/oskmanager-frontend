@@ -1,14 +1,14 @@
 <template>
-    <div class="mt-n3 rides-list" style="max-width: 57%"><!--Dodać że route params id do jazd-->
+    <div class="mt-n3 rides-list" style="max-width: 57%">
         <DataTable>
             <template #body>
-                <ctr v-for="(ride, index) in rides" :key="ride.id" class="text-left c-pointer"
+                <ctr v-for="(ride, index) in  rides " :key="ride.id" class="text-left c-pointer"
                     :class="{ 'selected-row': index === selectedRowIndex }" @click="setSelectedRide(ride, index)">
                     <!---->
                     <ctd>{{ formatDate(ride.startDate, ride.endDate) }} </ctd>
                     <ctd>Lokalizacja domyślna</ctd>
                     <ctd>
-                        <StudentItem :student="ride.course.student" />
+                        <StudentItem :student="ride.course.student" :height="height" />
                     </ctd>
                     <ctd>{{ ride.car.brand.name }} {{ ride.car.model.name }} {{ ride.car.registration }}</ctd>
                 </ctr>
@@ -21,12 +21,14 @@
 import DeleteConfimrationDialog from '../../../ui/dialogs/DeleteConfimrationDialog.vue';
 import DataTable from './Table.vue';
 import StudentItem from '../../../ui/student/StudentItem.vue';
+import InstructorItem from '../../../ui/instructor/InstructorItem.vue';
 
 export default {
     components: {
         DeleteConfimrationDialog,
         DataTable,
         StudentItem,
+        InstructorItem
     },
     data() {
         return {

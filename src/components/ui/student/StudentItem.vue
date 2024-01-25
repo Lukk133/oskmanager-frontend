@@ -28,11 +28,11 @@ export default {
         },
         width: {
             type: Number,
-            default: 40
+            default: 30
         },
         height: {
             type: Number,
-            default: 40
+            default: 30
         }
     }
 }

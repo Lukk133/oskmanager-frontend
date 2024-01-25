@@ -28,15 +28,15 @@
             <div></div>
             <v-icon class="icon ml-5 mr-3" size="small" color="red" icon="mdi-calendar" />
             <div class="pr-16" style="color: red">Odwołaj jazdę</div>
-            <div class="ml-13">
-                <DeleteConfimrationDialog :label="`tą jazdę`" :icon="''" @destroy="destroy(ride.id)" />
+            <div class="arrow-container ml-13">
+                <DeleteConfimrationDialog :label="`tą jazdę`" :icon="arrowIcon" @destroy="destroy(ride.id)" />
             </div>
         </v-sheet>
     </v-sheet>
 </template>
 
 <script>
-import DeleteConfimrationDialog from '../../../ui/dialogs/DeleteConfimrationDialog.vue';
+import DeleteConfimrationDialog from '../../../instructor/show/rides/DeleteConfirmationDialog.vue';
 import AvatarInput from '../../../ui/inputs/AvatarInput.vue';
 import StudentItem from '../../../ui/student/StudentItem.vue';
 import CarItem from '../../../ui/car/CarItem.vue';
@@ -56,6 +56,15 @@ export default {
         ridesPagination() {
             return this.$store.getters.getRidesPagination
         }
+    },
+    data() {
+        return {
+            arrowIcon: `
+      <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path id="Vector" d="M13 6.14286L1 6.14286M13 6.14286L7.85714 11.2857M13 6.14286L7.85714 1" stroke="#E94E31" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    `,
+        };
     },
     methods: {
         delete() {
@@ -110,5 +119,14 @@ export default {
     font-weight: 700;
     font-family: Encode Sans Expanded;
     font-size: 20px;
+}
+
+.arrow-container {
+    display: flex;
+    align-items: center;
+}
+
+.arrow-container svg {
+    transform: translateY(22%);
 }
 </style>

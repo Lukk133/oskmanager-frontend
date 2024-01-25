@@ -1,3 +1,3 @@
 <template>
-    INACTIVE
+    inactive
 </template>

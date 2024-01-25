@@ -22,9 +22,14 @@
             </v-card>
         </v-form>
     </div>
+    <Login />
 </template>
 <script>
+import Login from '../../components/login/Login.vue'
 export default {
+    components: {
+        Login
+    },
     data() {
         return {
             auth: {

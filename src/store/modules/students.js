@@ -74,6 +74,7 @@ export default {
             params.page = pagination.page - 1;
             await axios.get(URL_STUDENTS, { params: params }).then((response) => {
                 const students = response.data.content;
+                console.log(students);
                 console.log(response.data.totalPages);
                 commit("setStudents", students);
                 commit("setStudentsTotalPages", response.data.totalPages);

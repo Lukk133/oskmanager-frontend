@@ -22,10 +22,10 @@
     </div>-->
 </template>
 <script>
-import Filter from '../../components/student/List/Filter.vue';
-import List from '../../components/student/List/List.vue';
-import Pagination from '../../components/student/List/Pagination.vue';
-import Header from '../../components/student/List/Header.vue';
+import Filter from '../../components/student/list/Filter.vue';
+import List from '../../components/student/list/List.vue';
+import Pagination from '../../components/student/list/Pagination.vue';
+import Header from '../../components/student/list/Header.vue';
 export default {
     components: {
         Filter,

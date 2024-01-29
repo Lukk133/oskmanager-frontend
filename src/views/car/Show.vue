@@ -9,8 +9,8 @@
     </div>
 </template>
 <script>
-import Header from '../../components/car/Show/Header.vue'
-import Main from '../../components/car/Show/Main.vue'
+import Header from '../../components/car/show/Header.vue'
+import Main from '../../components/car/show/Main.vue'
 //import Documents from '../../components/car/Show/Documents.vue'
 export default {
     components: {

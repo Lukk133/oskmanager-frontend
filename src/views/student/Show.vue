@@ -9,10 +9,10 @@
     </div>
 </template>
 <script>
-import Header from '../../components/student/Show/Header.vue'
-import Main from '../../components/student/Show/Main.vue'
-import Documents from '../../components/student/Show/Documents.vue'
-import Rides from '../../components/student/Show/rides/Main.vue'
+import Header from '../../components/student/show/Header.vue'
+import Main from '../../components/student/show/Main.vue'
+import Documents from '../../components/student/show/Documents.vue'
+import Rides from '../../components/student/show/rides/Main.vue'
 export default {
     components: {
         Header,

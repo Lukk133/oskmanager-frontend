@@ -1,13 +1,18 @@
 <template>
+    <div v-if="title" class="select-title mb-1">
+        {{ title }}
+    </div>
     <div>
         <div class="text-input-label">
             {{ label }}
         </div>
         <v-sheet class="input-wrapper" :width="width" height="36">
-            <input v-model="value" class="text-input" :placeholder="placeholder" />
-            <span class="input-icon" v-if="icon">
-                <img src="/icons/loop.svg" />
-            </span>
+            <div class="input-container">
+                <input v-model="value" class="text-input" :placeholder="placeholder" />
+                <span class="input-icon" v-if="icon">
+                    <img src="/icons/loop.svg" />
+                </span>
+            </div>
         </v-sheet>
     </div>
 </template>
@@ -32,7 +37,11 @@ export default {
         width: {
             type: Number,
             default: 264
-        }
+        },
+        title: {
+            type: String,
+            default: null
+        },
     },
     emits: ['update:modelValue'],
     computed: {
@@ -48,6 +57,20 @@ export default {
 }
 </script>
 <style scoped>
+.select-title {
+    color: #707070;
+    font-family: Rubik;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+}
+
 .text-input-label {
     font-family: Rubik;
     font-size: 12px;

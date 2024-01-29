@@ -6,7 +6,7 @@ import qs from "qs";
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 window.axios.defaults.withCredentials = true;
 
-axios.defaults.baseURL = "http://api.oskmanager.pl/api/";
+axios.defaults.baseURL = "https://api.oskmanager.pl/api/";
 import store from "./store";
 
 axios.defaults.paramsSerializer = (params) => {

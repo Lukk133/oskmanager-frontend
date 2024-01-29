@@ -1,7 +1,9 @@
 <template>
     <v-sheet class="c-pointer bg-arsenic rounded-lg px-4 d-flex justify-space-evenly align-center" width="166" height="41"
         @click="goTo(redirectRoute)">
-        <img :src="'/icons/plus.svg'" alt="">
+        <div class="mr-3 mt-1">
+            <img :src="'/icons/plus.svg'" alt="">
+        </div>
         <div class="redirect-btn-label">
             {{ label }}
         </div>

@@ -1,5 +1,5 @@
 <template>
-    <v-sheet class="input-container bg-solitude my-2" :width="width">
+    <v-sheet class="input-container bg-solitude my-2 rounded-lg" :width="width">
         <label class="text-input-label">{{ label }}</label>
         <!-- <icon v-if="icon" :icon="icon" :width="13" :height="13" />
         <input type="text" v-model="value" class="underline-input"> -->

@@ -104,6 +104,7 @@ input {
 
 .input-icon {
     padding: 10px;
+    padding-top: 13px;
     border-radius: 0 12px 12px 0;
     /* Adjusted to only have border-radius on the right side */
     font-size: 16px;

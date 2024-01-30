@@ -1,43 +1,23 @@
 <template>
-    <Filter />
-    <Messages />
+    <div class="mr-2">
+        <div class="rides-container">
+            <Filter />
+        </div>
+        <div class="rides-content">
+            <UserMessages />
+            <Messages />
+        </div>
+    </div>
 </template>
 <script>
 import Filter from './Filter.vue'
+import UserMessages from './UserMessages.vue'
 import Messages from './Messages.vue'
 export default {
     components: {
         Filter,
+        UserMessages,
         Messages
-    },
-    computed: {
-        car() {
-            return this.$store.getters.getCar
-        },
-        infos() {
-            return [
-                {
-                    icon: "user.svg",
-                    label: `${this.car.brand ? this.car.brand.name : ''} ${this.car.model ? this.car.model.name : ''}`
-                },
-                {
-                    icon: "car.svg",
-                    label: `${this.car.brand ? this.car.brand.name : ''}`
-                },
-                {
-                    icon: "message.svg",
-                    label: `${this.car?.color}`
-                },
-                {
-                    icon: "category.svg",
-                    label: `${this.car?.registration}`
-                },
-            ]
-        }
-    },
-    data() {
-        return {
-        }
     },
     methods: {
         getSrc(src) {
@@ -50,12 +30,13 @@ export default {
 }
 </script>
 <style scoped>
-.info-label {
-    color: var(--d-9-d-9-d-9, #3C4B52);
-    font-family: Rubik;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
+.rides-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.rides-content {
+    display: flex;
+    flex: 1;
 }
 </style>

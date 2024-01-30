@@ -1,12 +1,15 @@
 <template>
     <div class="rides-container">
-        <RidesFilter />
-        <div class="rides-content">
-            <RidesList />
-            <RidesData />
+        <Filter />
+    </div>
+    <div class="rides-content">
+        <div class="messages-container">
+            <UserMessages />
+            <Messages />
         </div>
     </div>
 </template>
+
 <script>
 import RidesFilter from './Filter.vue';
 import RidesList from './List.vue';
@@ -44,13 +47,17 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
 .rides-container {
     display: flex;
     flex-direction: column;
 }
 
 .rides-content {
+    display: flex;
+}
+
+.messages-container {
     display: flex;
 }
 </style>

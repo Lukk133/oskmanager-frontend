@@ -4,7 +4,7 @@
             <SelectInput @update:model-value="" title="Grupa odbiorców" />
         </v-sheet>
         <v-sheet class="pa-2 bg-background">
-            <SelectInput @update:model-value="" title="Kategoria" />
+            <SelectInput @update:model-value="" title="Kategoria" :items="categories" />
         </v-sheet>
     </div>
 </template>
@@ -27,6 +27,9 @@ export default {
         instructor() {
             return this.$store.getters.getInstructor;
         },
+        categories() {
+            return this.$store.getters.getCategories;
+        }
     },
     methods: {
         listRides() {
@@ -36,6 +39,9 @@ export default {
             this.$emit("save");
         },
     },
+    mounted() {
+        this.$store.dispatch("listCategories")
+    }
 }; 
 </script>
 <style></style>

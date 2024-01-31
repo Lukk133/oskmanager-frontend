@@ -7,6 +7,7 @@
             <img src="../../assets/icons/camera.svg" />
             <img src="../../assets/icons/gallery.svg" class="mx-3" />
             <img src="../../assets/icons/attachments.svg" />
+            <!-- <icon :icon="'user'"></icon> -->
             <TextInput class="ml-3" :width="590" />
             <!-- :icon="bell.svg" -->
         </v-sheet>
@@ -14,10 +15,12 @@
 </template>
 
 <script>
-import TextInput from './TextInput.vue';
+import TextInput from '../ui/inputs/TextInput.vue';
+import Icon from '../ui/icons/Icon.vue';
 export default {
     components: {
-        TextInput
+        TextInput,
+        Icon
     },
     data() {
         return {
@@ -31,6 +34,5 @@ export default {
 .frame {
     flex: 0.8;
     height: calc(52.5vh - 20px);
-    /* Use calc to calculate 60% of the viewport height minus any additional padding or margin */
 }
 </style>

@@ -17,6 +17,7 @@ import fileInfos from './modules/fileInfos'
 import rides from './modules/rides'
 import calendar from './modules/calendar'
 import locations from './modules/locations'
+import converations from './modules/conversations'
 
 export default createStore({
     plugins: [
@@ -38,6 +39,7 @@ export default createStore({
         fileInfos,
         rides,
         calendar,
-        locations
+        locations,
+        converations
     },
 })

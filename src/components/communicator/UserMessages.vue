@@ -1,32 +1,24 @@
 <template>
     <div class="rides-list">
         <div class="mt-3 ml-2">
-            <SearchInput :title="'Wyszukiwarka tekstowa'" :width="maxWidthSearchInput" />
+            <SearchInput :title="'Wyszukiwarka tekstowa'" :width="maxWidthSearchInput" v-model="searchedUser" />
         </div>
-
         <div class="ml-2">
             <DataTable>
                 <template #body>
-                    <ctr v-for="(ride, index) in  rides " :key="ride.id" class="text-left c-pointer"
-                        :class="{ 'selected-row': index === selectedRowIndex }" @click="setSelectedRide(ride, index)">
-                        <!---->
+                    <ctr v-for="(conversation, index) in  conversations " :key="conversation.id" class="text-left c-pointer"
+                        :class="{ 'selected-row': index === selectedRowIndex }"
+                        @click="setSelectedConversations(conversation, index)">
                         <ctd>
-                            <div class="">
-                                <div class="ml-2 light-font">
-                                    {{ formatDate(ride.startDate, ride.endDate) }}
-                                </div>
-                                <div>
-                                    <StudentItem :student="ride.course.student" :height="height" />
-                                </div>
-                                <div class="ml-2 light-font">
-                                    Long message here
-                                </div>
+                            <div>
+                                <ConversationItem :conversation="conversation" />
                             </div>
                         </ctd>
                     </ctr>
                 </template>
             </DataTable>
         </div>
+
     </div>
 </template>
 
@@ -35,85 +27,55 @@ import SearchInput from "../../components/ui/inputs/SearchInput.vue";
 import DeleteConfimrationDialog from '../ui/dialogs/DeleteConfimrationDialog.vue';
 import AvatarImg from '../ui/imgs/AvatarImg.vue';
 import DataTable from '../instructor/show/rides/Table.vue';
-import StudentItem from '../ui/student/StudentItem.vue';
-import InstructorItem from '../ui/instructor/InstructorItem.vue';
+import ConversationItem from '../ui/conversation/ConversationItem.vue';
 
 export default {
     components: {
         SearchInput,
         DeleteConfimrationDialog,
         DataTable,
-        StudentItem,
-        InstructorItem,
+        ConversationItem,
         AvatarImg
     },
     data() {
         return {
             selectedRowIndex: null,
             maxWidthSearchInput: "100%",
+            searchedUser: ""
         };
     },
     computed: {
-        ridesParams() {
-            return this.$store.getters.getRidesParams;
-        },
-        instructor() {
-            return this.$store.getters.getInstructor;
-        },
-        rides() {
-            return this.$store.getters.getRides;
-        },
-        ridesPagination() {
-            return this.$store.getters.getRidesPagination;
+        conversations() {
+            return this.$store.getters.getConversations;
         },
     },
     methods: {
-        listRides() {
-            this.$store.dispatch("listRides")
-        },
-        save() {
-            this.$emit("save");
+        listConversations() {
+            this.$store.dispatch("listConversations")
         },
         goTo(id) {
             this.$router.push({ name: 'CarsShow', params: { id: id } });
         },
-        setSelectedRide(ride, index) {
-            this.$store.commit('setRide', ride);
+        setSelectedConversations(conversation, index) {
+            this.$store.commit('setConversation', conversation);
             this.selectedRowIndex = index;
-            console.log(this.$store.getters.getRide);
-        },
-        formatDate(startDateString, endDateString) {
-            const startDate = new Date(startDateString);
-            const endDate = new Date(endDateString);
-
-            const startDay = ('0' + startDate.getDate()).slice(-2);
-            const startMonth = ('0' + (startDate.getMonth() + 1)).slice(-2);
-            const startYear = startDate.getFullYear().toString().slice(-2);
-            // const startHours = ('0' + startDate.getHours()).slice(-2);
-            // const startMinutes = ('0' + startDate.getMinutes()).slice(-2);
-
-            // const endHours = ('0' + endDate.getHours()).slice(-2);
-            // const endMinutes = ('0' + endDate.getMinutes()).slice(-2);
-
-            // const formattedHours = `<span class="highlighted-hours">${startHours}:${startMinutes}-${endHours}:${endMinutes}</span>`;
-
-            return `${startDay}.${startMonth}.${startYear}`.replace(/<\/?span[^>]*>/g, '');
+            console.log(this.$store.getters.getConversation);
         },
         async selectTopRow() {
             this.$nextTick(() => {
-                if (this.rides.length > 0) {
-                    this.$store.commit('setRide', this.rides[0]);
-                    console.log(this.rides[0]);
+                if (this.conversations.length > 0) {
+                    this.$store.commit('setConversation', this.conversations[0]);
+                    console.log(this.conversations[0]);
                     this.selectedRowIndex = 0;
                 }
             });
         },
     },
     watch: {
-        rides: 'selectTopRow',
+        conversations: 'selectTopRow',
     },
     mounted() {
-        this.$store.dispatch('listRides');
+        this.listConversations
     },
 }
 </script>
@@ -121,7 +83,6 @@ export default {
 .selected-row {
     background-color: #e8ecf4;
 }
-
 
 .highlighted-hours {
     font-weight: bold;
@@ -131,11 +92,34 @@ export default {
     font-weight: 400;
     font-size: 12px;
     color: #9B9B9B;
-
 }
 
 .rides-list {
     flex: 0.7;
     margin-right: 16px;
+    overflow-y: scroll;
+    /* Change from auto to scroll */
 }
+
+/* You can also adjust the scrollbar appearance if needed */
+.rides-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.rides-list::-webkit-scrollbar-thumb {
+    background-color: #F5F7FA;
+    border-radius: 4px;
+}
+
+.rides-list::-webkit-scrollbar-track {
+    background-color: #E8ECF4;
+}
+
+/* colors: {
+        "background": "#E8ECF4",
+        "solitude": "#F5F7FA",
+        "arsenic": "#41494E",
+        "forsetGreen": "#2A9A2F",
+        "atomic": "#3C4B52"
+    } */
 </style>

@@ -1,7 +1,7 @@
 <template>
     <v-sheet class="d-flex rounded-lg frame bg-white pa-5 mt-2">
         <div>
-            HALO
+            <!-- <ConversationItem /> -->
         </div>
         <v-sheet class=" align-self-end d-flex">
             <img src="../../assets/icons/camera.svg" />
@@ -9,6 +9,7 @@
             <img src="../../assets/icons/attachments.svg" />
             <!-- <icon :icon="'user'"></icon> -->
             <TextInput class="ml-3" :width="590" />
+            <v-btn @click="listuj">Listuj</v-btn>
             <!-- :icon="bell.svg" -->
         </v-sheet>
     </v-sheet>
@@ -16,16 +17,21 @@
 
 <script>
 import TextInput from '../ui/inputs/TextInput.vue';
+import ConversationItem from '../ui/conversation/ConversationItem.vue';
 import Icon from '../ui/icons/Icon.vue';
 export default {
     components: {
         TextInput,
-        Icon
+        Icon,
+        ConversationItem
     },
     data() {
         return {
             maxWidthSearchInput: "100%"
         }
+    },
+    mounted() {
+        this.$store.dispatch('listConversations')
     }
 }
 </script>

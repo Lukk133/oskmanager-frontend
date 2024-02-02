@@ -18,7 +18,6 @@ export default {
                 .get(URL_CATEGORIES)
                 .then((response) => {
                     const categories = response.data;
-                    console.log(response.data);
                     commit("setCategories", categories);
                 })
                 .catch((error) => {

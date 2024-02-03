@@ -6,7 +6,7 @@
                 <div class="light-font">
                     {{ formatLastMessageDate(conversation?.lastMessageAt) }}
                 </div>
-                {{ getFirstUserName() }}
+                {{ getOtherUserName() }}
                 <div class="light-font">
                     {{ conversation?.lastMessage }}
                 </div>
@@ -46,7 +46,7 @@ export default {
     methods: {
         formatLastMessageDate(dateArray) {
             if (!dateArray || dateArray.length !== 7) {
-                return ''; // Handle invalid date format
+                return '';
             }
 
             const [year, month, day, hours, minutes, seconds, milliseconds] = dateArray;
@@ -55,11 +55,11 @@ export default {
             const options = { day: 'numeric', month: 'numeric', year: 'numeric' };
             return formattedDate.toLocaleDateString(undefined, options);
         },
-        getFirstUserName() {
-            const firstUser = this.conversation?.users?.[0];
+        getOtherUserName() {
+            const otherUser = this.conversation?.users?.find(user => user.id !== this.$store.getters.getUser.id);
 
-            if (firstUser) {
-                return `${firstUser.name} ${firstUser.lastName}`;
+            if (otherUser) {
+                return `${otherUser.name} ${otherUser.lastName}`;
             }
 
             return '';

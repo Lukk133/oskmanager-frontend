@@ -30,5 +30,18 @@ export default {
                     console.error("Error fetching conversations:", error);
                 });
         },
+        createConversation({ commit }, params) {
+            axios
+                .post(URL_CONVERSATIONS, params)
+                .then((response) => {
+                    const conversations = response.data;
+                    console.log(conversations);
+                    //  return conversations
+                })
+                .catch((error) => {
+                    console.error("Error fetching conversations:", error);
+                    throw error;
+                });
+        },
     },
 };

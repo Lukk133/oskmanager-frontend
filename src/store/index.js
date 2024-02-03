@@ -18,6 +18,8 @@ import rides from './modules/rides'
 import calendar from './modules/calendar'
 import locations from './modules/locations'
 import converations from './modules/conversations'
+import users from './modules/users'
+import messages from './modules/messages'
 
 export default createStore({
     plugins: [
@@ -40,6 +42,8 @@ export default createStore({
         rides,
         calendar,
         locations,
-        converations
+        converations,
+        users,
+        messages
     },
 })

@@ -160,25 +160,16 @@ export default {
     /* Change from auto to scroll */
 }
 
-/* You can also adjust the scrollbar appearance if needed */
 .rides-list::-webkit-scrollbar {
     width: 8px;
 }
 
 .rides-list::-webkit-scrollbar-thumb {
-    background-color: #F5F7FA;
+    background-color: #41494E;
     border-radius: 4px;
 }
 
 .rides-list::-webkit-scrollbar-track {
-    background-color: #E8ECF4;
+    background-color: #F5F7FA;
 }
-
-/* colors: {
-        "background": "#E8ECF4",
-        "solitude": "#F5F7FA",
-        "arsenic": "#41494E",
-        "forsetGreen": "#2A9A2F",
-        "atomic": "#3C4B52"
-    } */
 </style>

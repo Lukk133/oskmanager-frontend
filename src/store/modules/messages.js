@@ -31,5 +31,18 @@ export default {
                     console.error("Error fetching messages:", error);
                 });
         },
+        sendMessage({ commit }, params) {
+            console.log(params);
+            axios
+                .post(URL_MESSAGES, params)
+                .then((response) => {
+                    const messages = response.data;
+                    console.log(messages);
+                    commit("setMessages", messages);
+                })
+                .catch((error) => {
+                    console.error("Error fetching messages:", error);
+                });
+        },
     },
 };

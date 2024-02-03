@@ -1,13 +1,15 @@
 <template>
-    <v-sheet class="d-flex flex-column rounded-lg frame bg-white pa-5 mt-2">
-        <div v-for="(message, index) in messages" :key="message.id" class="d-flex text-left c-pointer">
-            <div class="mb-2 d-flex"
-                :style="{ justifyContent: message.sender.id === loggedUser.id ? 'flex-end' : 'flex-start', width: '780px' }">
-                <icon :icon="'user'" class="mt-2 mx-2" :style="{ order: message.sender.id === loggedUser.id ? 1 : 0 }" />
-                <v-sheet class="bg-solitude rounded-lg flex-row d-flex pa-2"
-                    :class="{ 'message-right': message.sender.id === loggedUser.id, 'message-left': message.sender.id !== loggedUser.id }">
-                    {{ message.content }}
-                </v-sheet>
+    <v-sheet class="d-flex flex-column rounded-lg frame bg-white pa-5 mt-2" style="max-height: 500px;">
+        <div class="message-container" style="overflow-y: auto;">
+            <div v-for="(message, index) in messages" :key="message.id" class="d-flex text-left c-pointer">
+                <div class="mb-2 d-flex"
+                    :style="{ justifyContent: message?.sender.id === loggedUser.id ? 'flex-end' : 'flex-start', width: '780px' }">
+                    <icon :icon="'user'" class="mt-2 mx-2"
+                        :style="{ order: message.sender.id === loggedUser.id ? 1 : 0 }" />
+                    <v-sheet class="bg-solitude rounded-lg flex-row d-flex pa-2">
+                        {{ message.content }}
+                    </v-sheet>
+                </div>
             </div>
         </div>
         <div class="mt-auto"></div>
@@ -15,7 +17,8 @@
             <img src="../../assets/icons/camera.svg" />
             <img src="../../assets/icons/gallery.svg" class="mx-3" />
             <img src="../../assets/icons/attachments.svg" />
-            <TextInput class="ml-3" :width="590" />
+            <TextInput v-model="message" class="ml-3" :width="590" />
+            <v-btn class="mt-2" @click="sendMessage">Wyślij</v-btn>
         </v-sheet>
     </v-sheet>
 </template>
@@ -45,9 +48,20 @@ export default {
     data() {
         return {
             maxWidthSearchInput: '100%',
+            message: ''
         };
     },
-};
+    methods: {
+        async sendMessage() {
+            if (this.message !== '') {
+                const params = { content: this.message, conversationId: this.conversation.id, senderId: this.loggedUser.id };
+                await this.$store.dispatch("sendMessage", params);
+                await this.$store.dispatch('listMessages', { conversationId: this.conversation.id });
+                this.message = '';
+            }
+        },
+    },
+}
 </script>
 
 <style scoped>
@@ -57,10 +71,21 @@ export default {
     font-size: 12px;
 }
 
-.img {
-    width: 20px;
-    /* Adjust the width as needed */
-    height: 20px;
-    /* Adjust the height as needed */
+.message-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.message-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.message-container::-webkit-scrollbar-thumb {
+    background-color: #41494E;
+    border-radius: 4px;
+}
+
+.message-container::-webkit-scrollbar-track {
+    background-color: #F5F7FA;
 }
 </style>

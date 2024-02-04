@@ -21,14 +21,12 @@
 import DeleteConfimrationDialog from '../../../ui/dialogs/DeleteConfimrationDialog.vue';
 import DataTable from './Table.vue';
 import StudentItem from '../../../ui/student/StudentItem.vue';
-import InstructorItem from '../../../ui/instructor/InstructorItem.vue';
 
 export default {
     components: {
         DeleteConfimrationDialog,
         DataTable,
         StudentItem,
-        InstructorItem
     },
     data() {
         return {
@@ -67,7 +65,7 @@ export default {
 
             const formattedHours = `<span class="highlighted-hours">${startHours}:${startMinutes}-${endHours}:${endMinutes}</span>`;
 
-            return `${startDay}.${startMonth}.${startYear} ${formattedHours}`.replace(/<\/?span[^>]*>/g, '');
+            return `${startDay}.${startMonth}.${startYear} ${formattedHours}`.replace(/<\/?span[^>]*>/g, ''); //do zmiany
         },
         async selectTopRow() {
             this.$nextTick(() => {
@@ -94,7 +92,7 @@ export default {
 }
 
 .rides-list {
-    flex: 1;
+    /* flex: 1; */
     margin-right: 16px;
 }
 

@@ -1,9 +1,10 @@
 <template>
     <v-sheet class="d-flex flex-column rounded-lg frame bg-white pa-5 mt-2" style="max-height: 500px;">
         <div class="message-container" style="overflow-y: auto;">
-            <div v-for="(message, index) in messages" :key="message.id" class="d-flex text-left c-pointer">
+            <div v-for="message in messages" :key="message.id" class="d-flex text-left c-pointer">
                 <div class="mb-2 d-flex"
                     :style="{ justifyContent: message?.sender.id === loggedUser.id ? 'flex-end' : 'flex-start', width: '780px' }">
+                    <!-- do poprawy width -->
                     <icon :icon="'user'" class="mt-2 mx-2"
                         :style="{ order: message.sender.id === loggedUser.id ? 1 : 0 }" />
                     <v-sheet class="bg-solitude rounded-lg flex-row d-flex pa-2">
@@ -17,6 +18,7 @@
             <img src="../../assets/icons/camera.svg" />
             <img src="../../assets/icons/gallery.svg" class="mx-3" />
             <img src="../../assets/icons/attachments.svg" />
+            <!-- <icon/> -->
             <TextInput v-model="message" class="ml-3" :width="590" />
             <v-btn class="mt-2" @click="sendMessage">Wyślij</v-btn>
         </v-sheet>
@@ -47,7 +49,6 @@ export default {
     },
     data() {
         return {
-            maxWidthSearchInput: '100%',
             message: ''
         };
     },
@@ -81,7 +82,7 @@ export default {
 }
 
 .message-container::-webkit-scrollbar-thumb {
-    background-color: #41494E;
+    background-color: #d9dee2;
     border-radius: 4px;
 }
 

@@ -2,7 +2,7 @@
     <div class="ma-3">
         <ModuleTitle :icon="'comunicator.svg'" :title="'Komunikator'" :label="'Czaty'">
             <template #button>
-                <RedirectButton @click="goToCreate" :width="279" :label="'wiadomość dla wielu odbiorców'" />
+                <RedirectButton :width="279" :label="'wiadomość dla wielu odbiorców'" />
             </template>
         </ModuleTitle>
     </div>
@@ -16,17 +16,6 @@ export default {
         ModuleTitle,
         RedirectButton
     },
-    computed: {
-        car() {
-            return this.$store.getters.getCar
-        }
-    },
-    methods: {
-        save() {
-            this.$emit("save")
-        },
-    }
-
 }
 </script>
 <style>

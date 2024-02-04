@@ -18,14 +18,7 @@ export default {
         isActual(name) {
             return this.$route.query.tab == name
         },
-        getCar() {
-            const id = this.$route.params.id
-            this.$store.dispatch("getCar", id)
-        }
     },
-    mounted() {
-        this.getCar()
-    }
 }
 
 </script>

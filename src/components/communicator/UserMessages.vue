@@ -11,7 +11,7 @@
                         :class="{ 'selected-row': index === selectedRowIndex }"
                         @click="setSelectedConversations(conversation, index)">
                         <ctd>
-                            <div @click="displayConversation()">
+                            <div>
                                 <ConversationItem :conversation="conversation" />
                             </div>
                         </ctd>
@@ -34,7 +34,6 @@
 <script>
 import SearchInput from "../../components/ui/inputs/SearchInput.vue";
 import DeleteConfimrationDialog from '../ui/dialogs/DeleteConfimrationDialog.vue';
-import AvatarImg from '../ui/imgs/AvatarImg.vue';
 import DataTable from '../instructor/show/rides/Table.vue';
 import ConversationItem from '../ui/conversation/ConversationItem.vue';
 
@@ -44,7 +43,6 @@ export default {
         DeleteConfimrationDialog,
         DataTable,
         ConversationItem,
-        AvatarImg
     },
     data() {
         return {
@@ -79,9 +77,6 @@ export default {
         }
     },
     methods: {
-        displayConversation() {
-            console.log(this.$store.getters.getConversation);
-        },
         async createConversation(id) {
             try {
                 const payload = { userIds: [this.loggedUser.id, id] };
@@ -94,9 +89,6 @@ export default {
         },
         listConversations() {
             this.$store.dispatch("listConversations")
-        },
-        goTo(id) {
-            this.$router.push({ name: 'CarsShow', params: { id: id } });
         },
         setSelectedConversations(conversation, index) {
             this.$store.commit('setConversation', conversation);
@@ -117,7 +109,6 @@ export default {
         },
         async selectTopRow() {
             this.$nextTick(() => {
-                console.log('halo');
                 if (this.conversations.length > 0) {
                     this.$store.commit('setConversation', this.conversations[0]);
                     const params = { conversationId: this.conversation.id };
@@ -143,21 +134,10 @@ export default {
     background-color: #e8ecf4;
 }
 
-.highlighted-hours {
-    font-weight: bold;
-}
-
-.light-font {
-    font-weight: 400;
-    font-size: 12px;
-    color: #9B9B9B;
-}
-
 .rides-list {
     flex: 0.7;
     margin-right: 16px;
     overflow-y: scroll;
-    /* Change from auto to scroll */
 }
 
 .rides-list::-webkit-scrollbar {
@@ -165,7 +145,7 @@ export default {
 }
 
 .rides-list::-webkit-scrollbar-thumb {
-    background-color: #41494E;
+    background-color: #d9dee2;
     border-radius: 4px;
 }
 

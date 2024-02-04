@@ -85,17 +85,14 @@ export default {
             if (this.ridesParams.dateRange === value) {
                 this.ridesParams.dateRange = null
             } else { this.ridesParams.dateRange = value }
-            console.log(this.$store.getters.getRidesParams);
             this.listRides()
         },
         handleDateFilter(value) {
             if (this.ridesParams.sortByDate === value) {
                 this.ridesParams.sortByDate = null
             } else { this.ridesParams.sortByDate = value }
-            console.log(this.$store.getters.getRidesParams);
             this.listRides()
         },
-
         save() {
             this.$emit("save");
         },

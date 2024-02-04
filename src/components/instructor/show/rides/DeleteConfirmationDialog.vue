@@ -5,7 +5,6 @@
                 <div v-html="icon"></div>
             </v-btn>
         </template>
-
         <v-card>
             <v-card-text class="text-center">
                 Czy napewno chcesz usunać {{ label }} ?

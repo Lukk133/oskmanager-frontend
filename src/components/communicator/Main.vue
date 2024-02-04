@@ -1,9 +1,9 @@
 <template>
     <div class="mr-2">
-        <div class="rides-container">
+        <div class="d-flex flex-column">
             <Filter />
         </div>
-        <div class="rides-content">
+        <div class="rides-content d-flex">
             <UserMessages />
             <Messages />
         </div>
@@ -19,24 +19,19 @@ export default {
         UserMessages,
         Messages
     },
-    methods: {
-        getSrc(src) {
-            if (!src) {
-                return null;
-            }
-            return `${axios.defaults.baseURL}files?path=${src}`
-        },
-    }
+    // methods: {
+    //     getSrc(src) {
+    //         if (!src) {
+    //             return null;
+    //         }
+    //         return `${axios.defaults.baseURL}files?path=${src}`
+    //     },
+    // } co to jest?
 }
 </script>
 <style scoped>
-.rides-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.rides-content {
-    display: flex;
+/* .rides-content {
     flex: 1;
-}
+    czm
+} */
 </style>

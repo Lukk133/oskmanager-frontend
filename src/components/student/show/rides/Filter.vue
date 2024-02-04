@@ -96,7 +96,6 @@ export default {
             console.log(this.$store.getters.getRidesParams);
             this.listRides()
         },
-
         save() {
             this.$emit("save");
         },

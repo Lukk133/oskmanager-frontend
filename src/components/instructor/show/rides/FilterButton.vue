@@ -28,7 +28,6 @@ export default {
     },
     methods: {
         updateFilter() {
-            console.log("HALO");
             this.$emit('updateFilter', this.value);
             this.$emit('update:modelValue', this.value);
         },

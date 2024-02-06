@@ -4,8 +4,8 @@ export default {
         errors: [],
         error: "",
         showMessage: false,
-        messages: [],
-        message: "",
+        // messages: [],
+        // message: "",
 
     },
     getters: {
@@ -13,8 +13,8 @@ export default {
         getErrors: state => state.errors,
         getError: state => state.error,
         getShowMessage: state => state.showMessage,
-        getMessages: state => state.messages,
-        getMessage: state => state.message
+        // getMessages: state => state.messages,
+        // getMessage: state => state.message
     },
     mutations: {
         setShowError(state, data) {

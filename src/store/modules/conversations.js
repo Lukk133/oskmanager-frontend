@@ -1,13 +1,20 @@
 const URL_CONVERSATIONS = "/conversations";
 
+const defaultConversationsParams = {
+    schoolId: 0,
+    userId: 0,
+}
+
 export default {
     state: {
         conversations: [],
-        conversation: ""
+        conversation: "",
+        conversationsParams: { ...defaultConversationsParams }
     },
     getters: {
         getConversations: (state) => state.conversations,
         getConversation: (state) => state.conversation,
+        getConversationsParams: (state) => state.conversationsParams,
     },
     mutations: {
         setConversations(state, data) {
@@ -16,17 +23,23 @@ export default {
         setConversation(state, data) {
             state.conversation = data;
         },
+        setConversationsParams(state, data) {
+            state.conversationsParams = data;
+        },
     },
     actions: {
-        listConversations({ commit }) {
+        listConversations({ commit, getters }) {
+            const params = getters.getConversationsParams;
+
+            console.log(params);
             axios
-                .get(URL_CONVERSATIONS)
-                .then((response) => {
+                .get(URL_CONVERSATIONS, { params })
+                .then(response => {
                     const conversations = response.data;
                     console.log(response.data);
                     commit("setConversations", conversations);
                 })
-                .catch((error) => {
+                .catch(error => {
                     console.error("Error fetching conversations:", error);
                 });
         },

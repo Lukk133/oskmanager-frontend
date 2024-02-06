@@ -1,7 +1,7 @@
 <template>
-    <div class="rides-container">
+    <div class="d-flex flex-column">
         <RidesFilter />
-        <div class="rides-content">
+        <div class="d-flex">
             <RidesList />
             <RidesData />
         </div>
@@ -44,13 +44,3 @@ export default {
     }
 }
 </script>
-<style>
-.rides-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.rides-content {
-    display: flex;
-}
-</style>

@@ -14,11 +14,10 @@
             </div>
         </div>
         <div class="mt-auto"></div>
-        <v-sheet class="d-flex justify-center">
-            <img src="../../assets/icons/camera.svg" />
-            <img src="../../assets/icons/gallery.svg" class="mx-3" />
-            <img src="../../assets/icons/attachments.svg" />
-            <!-- <icon/> -->
+        <v-sheet class="d-flex justify-space-between align-center mb-n4">
+            <icon :icon="'camera'" />
+            <icon :icon="'gallery'" />
+            <icon :icon="'attachments'" />
             <TextInput v-model="message" class="ml-3" :width="590" />
             <v-btn class="mt-2" @click="sendMessage">Wyślij</v-btn>
         </v-sheet>
@@ -53,14 +52,37 @@ export default {
         };
     },
     methods: {
+        scrollToBottom() {
+            this.$nextTick(() => {
+                const container = this.$el.querySelector('.message-container');
+                if (container) {
+                    container.scrollTop = container.scrollHeight;
+                }
+            });
+        },
         async sendMessage() {
             if (this.message !== '') {
                 const params = { content: this.message, conversationId: this.conversation.id, senderId: this.loggedUser.id };
                 await this.$store.dispatch("sendMessage", params);
                 await this.$store.dispatch('listMessages', { conversationId: this.conversation.id });
                 this.message = '';
+
+                this.$nextTick(() => {
+                    this.scrollToBottom();
+                });
             }
         },
+    },
+    mounted() {
+        this.scrollToBottom();
+    },
+    updated() {
+        this.scrollToBottom();
+    },
+    watch: {
+        messages() {
+            this.scrollToBottom();
+        }
     },
 }
 </script>
@@ -73,7 +95,6 @@ export default {
 }
 
 .message-container {
-    max-height: 400px;
     overflow-y: auto;
 }
 

@@ -1,13 +1,12 @@
 <template>
     <div class="rides-list">
-        <div class="mt-3 ml-2">
-            <SearchInput :title="'Wyszukiwarka tekstowa'" :width="maxWidthSearchInput" v-model="searchedUser" />
+        <div class="mt-3 ml-2 bg-solitude">
+            <SearchInput :title="'Wyszukiwarka tekstowa'" :width="maxWidthSearchInput" v-model="usersParams.fullName" />
         </div>
         <div class="ml-2" style="max-height: 400px;">
             <DataTable>
                 <template #body>
-                    <ctr v-if="searchedUser === ''" v-for="(conversation, index) in  filteredConversations"
-                        :key="conversation.id" class="text-left c-pointer"
+                    <ctr v-for="(conversation, index) in  conversations" :key="conversation.id" class="text-left c-pointer"
                         :class="{ 'selected-row': index === selectedRowIndex }"
                         @click="setSelectedConversations(conversation, index)">
                         <ctd>
@@ -16,7 +15,7 @@
                             </div>
                         </ctd>
                     </ctr>
-                    <ctr v-if="searchedUser !== ''" v-for="( user, index ) in filteredUsers " :key="user.id"
+                    <ctr v-if="usersParams.fullName !== ''" v-for="( user, index ) in users" :key="user.id"
                         class="text-left c-pointer" :class="{ 'selected-row': index === selectedRowIndex }"
                         @click="setSelectedConversations(user, index), refreshConversations">
                         <ctd>
@@ -52,10 +51,11 @@ export default {
         };
     },
     computed: {
-        filteredConversations() {
-            return this.conversations.filter(conversation =>
-                conversation.users.some(user => user.id === this.loggedUser.id)
-            );
+        usersParams() {
+            return this.$store.getters.getUsersParams
+        },
+        conversationParams() {
+            return this.$store.getters.conversationParams
         },
         conversations() {
             return this.$store.getters.getConversations;
@@ -66,39 +66,31 @@ export default {
         users() {
             return this.$store.getters.getUsers;
         },
-        filteredUsers() {
-            return this.users.filter(user =>
-                user.name.toLowerCase().includes(this.searchedUser.toLowerCase()) ||
-                user.lastName.toLowerCase().includes(this.searchedUser.toLowerCase())
-            );
-        },
         loggedUser() {
             return this.$store.getters.getUser
         }
     },
     methods: {
         async createConversation(id) {
-            try {
-                const payload = { userIds: [this.loggedUser.id, id] };
-                await this.$store.dispatch("createConversation", payload);
-                this.searchedUser = '';
-                this.listConversations();
-            } catch (error) {
-                console.error("Error creating conversation:", error);
-            }
+            const payload = { userIds: [this.loggedUser.id, id] };
+            await this.$store.dispatch("createConversation", payload);
+            this.conversationParams.fullName = '';
+            this.listConversations();
         },
-        listConversations() {
-            this.$store.dispatch("listConversations")
+        async listConversations() {
+            this.$store.commit("setConversationsParams", { customerId: this.loggedUser.id });
+
+            await this.$store.dispatch("listConversations");
+        },
+        listAvailableUsers() {
+            this.$store.dispatch("listUsers")
+            console.log(this.usersParams);
         },
         setSelectedConversations(conversation, index) {
             this.$store.commit('setConversation', conversation);
             this.selectedRowIndex = index;
             const params = { conversationId: this.conversation.id };
             this.$store.dispatch('listMessages', params);
-            if (this.searchedUser !== '') {
-                this.searchedUser = '';
-                this.listConversations();
-            }
         },
         async refreshConversations(conversation) {
             if (this.searchedUser !== '') {
@@ -117,15 +109,31 @@ export default {
                 }
             });
         },
+        async initConversation() {
+            await this.$store.dispatch("getLoggedUser")
+            this.$store.commit("setConversationsParams", { customerId: this.loggedUser.id })
+            await this.$store.dispatch("listConversations")
+        }
     },
     watch: {
         conversations: 'selectTopRow',
+        usersParams: {
+            handler() {
+                this.listAvailableUsers();
+            },
+            deep: true
+        },
+        conversationsParams: {
+            handler() {
+                this.listConversations()
+            },
+            deep: true
+
+        }
     },
     mounted() {
-        this.listConversations()
-        this.$store.dispatch("listUsers")
-        this.$store.dispatch("getLoggedUser")
-
+        this.initConversation()
+        this.$store.dispatch("listUsers");
     },
 }
 </script>
@@ -142,6 +150,7 @@ export default {
 
 .rides-list::-webkit-scrollbar {
     width: 8px;
+    margin-left: 20px;
 }
 
 .rides-list::-webkit-scrollbar-thumb {
@@ -151,5 +160,12 @@ export default {
 
 .rides-list::-webkit-scrollbar-track {
     background-color: #F5F7FA;
+}
+
+.mt-3.ml-2 {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: inherit;
 }
 </style>

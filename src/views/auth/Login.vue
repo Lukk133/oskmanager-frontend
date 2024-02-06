@@ -1,34 +1,34 @@
 <template>
-    <div class="mt-16 text-center">
+    <div class="parent">
         <v-snackbar v-model="showError" timeout="3000" color="error" location="top">
             {{ error }}
         </v-snackbar>
-        <v-form v-model="form" @submit.prevent="login">
-            <v-card width="400" class="mx-auto">
-                <v-card-title>
-                    LOGIN PAGE
-                </v-card-title>
-                <v-card-text>
-                    <v-text-field label="Podaj email" v-model="auth.email" :rules="emailRules"></v-text-field>
-                    <v-text-field v-model="auth.password" :readonly="loading" :rules="passwordRules" clearable
-                        label="Password" placeholder="Enter your password"
-                        :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'" @click:append="showPassword = !showPassword"
-                        :type="showPassword ? 'text' : 'password'"></v-text-field>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn @click="login">Zaloguj</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-form>
+        <v-sheet class="d-flex align-center flex-column justify-center bg-white pa-9 rounded-lg login-form" width="403"
+            height="350">
+            <!-- height=635 -->
+            <div class="mb-10">
+                <!-- mb-15 -->
+                Zaloguj się
+            </div>
+            <TextInput class="bg-white rounded-pill mb-3 align-center pt-1 pl-7 d-flex" width="331" height="42"
+                v-model="auth.email" :rules="emailRules" placeholder="Login" />
+            <!--:icon="'user'"-->
+            <TextInput class="bg-white rounded-pill mb-7 align-center pl-7 d-flex" width="331" height="42"
+                v-model="auth.password" :readonly="loading" :rules="passwordRules" clearable
+                :type="showPassword ? 'text' : 'password'" placeholder="Hasło" :icon="'car.svg'" />
+            <!-- label="Password" -->
+            <v-sheet
+                class="bg-arsenic rounded-pill mb-3 align-center d-flex login align-center justify-center d-flex c-pointer"
+                width="331" height="42" @click="login">Zaloguj
+                się</v-sheet>
+        </v-sheet>
     </div>
-    <Login />
 </template>
 <script>
-import Login from '../../components/login/Login.vue'
+import TextInput from '../../components/ui/inputs/TextInput.vue'
 export default {
     components: {
-        Login
+        TextInput
     },
     data() {
         return {
@@ -84,3 +84,18 @@ export default {
     }
 }
 </script>
+<style>
+.parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.parent .login-form {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login {
+    font-size: 14px;
+}
+</style>

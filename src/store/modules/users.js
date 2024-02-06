@@ -1,13 +1,20 @@
 const URL_USERS = "/users";
 
+const defaultUsersParams = {
+    schoolId: 0,
+    userType: "INSTRUCTOR"
+}
+
 export default {
     state: {
         users: [],
-        user: ""
+        user: "",
+        usersParams: { ...defaultUsersParams },
     },
     getters: {
         getUsers: (state) => state.users,
         getUser: (state) => state.user,
+        getUsersParams: (state) => state.usersParams,
     },
     mutations: {
         setUsers(state, data) {
@@ -16,11 +23,20 @@ export default {
         setUser(state, data) {
             state.user = data;
         },
+        setUsersParams(state, data) {
+            state.usersParams = data;
+        },
+        initUsersParams(state) {
+            state.usersParams = { ...defaultUsersParams };
+        },
     },
     actions: {
-        listUsers({ commit }) {
+        listUsers({ commit, getters }) {
+            const params = getters.getUsersParams
+            params.fullName = params.fullName
+            console.log(params);
             axios
-                .get(URL_USERS)
+                .get(`${URL_USERS}/available`, { params: params })
                 .then((response) => {
                     const users = response.data;
                     console.log(response.data);

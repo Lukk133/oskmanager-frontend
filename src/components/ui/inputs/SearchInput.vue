@@ -7,7 +7,7 @@
             {{ label }}
         </div>
         <v-sheet class="input-wrapper" :width="width" height="36">
-            <div class="input-container">
+            <div class="input-container align-end">
                 <input v-model="value" class="text-input" :placeholder="placeholder" />
                 <span class="input-icon" v-if="icon">
                     <img src="/icons/loop.svg" />
@@ -69,6 +69,7 @@ export default {
 .input-container {
     display: flex;
     align-items: center;
+    flex-wrap: nowrap;
 }
 
 .text-input-label {

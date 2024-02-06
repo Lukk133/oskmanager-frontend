@@ -1,11 +1,11 @@
 <template>
-    <div class="rides-container">
-        <Filter />
+    <div class="d-flex flex-column">
+        <RidesFilter />
     </div>
-    <div class="rides-content">
-        <div class="messages-container">
-            <UserMessages />
-            <Messages />
+    <div class="d-flex">
+        <div class="d-flex">
+            <RidesList />
+            <RidesData />
         </div>
     </div>
 </template>
@@ -47,17 +47,3 @@ export default {
     }
 }
 </script>
-<style scoped>
-.rides-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.rides-content {
-    display: flex;
-}
-
-.messages-container {
-    display: flex;
-}
-</style>

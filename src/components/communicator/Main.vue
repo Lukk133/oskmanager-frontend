@@ -11,7 +11,7 @@
 </template>
 <script>
 import Filter from './Filter.vue'
-import UserMessages from './UserMessages.vue'
+import UserMessages from './Conversations.vue'
 import Messages from './Messages.vue'
 export default {
     components: {

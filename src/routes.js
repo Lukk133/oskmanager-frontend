@@ -20,9 +20,10 @@ import store from "./store";
 
 const routes = [
     {
-        name: "Login",
+        name: 'Login',
         path: "/login",
         component: Login,
+        meta: { hideNavigation: true }
     },
     {
         name: "Home",

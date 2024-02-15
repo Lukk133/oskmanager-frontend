@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <div class="d-flex flex-row">
-            <SideNavigation />
+            <SideNavigation v-if="!$route.meta.hideNavigation" />
             <div class="d-flex flex-column flex-grow-1">
                 <TopNavigation />
                 <InfoSnackbar />

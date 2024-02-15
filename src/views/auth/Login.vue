@@ -15,7 +15,8 @@
             <!--:icon="'user'"-->
             <TextInput class="bg-white rounded-pill mb-7 align-center pl-7 d-flex" width="331" height="42"
                 v-model="auth.password" :readonly="loading" :rules="passwordRules" clearable
-                :type="showPassword ? 'text' : 'password'" placeholder="Hasło" :icon="'car.svg'" />
+                :type="showPassword ? 'text' : 'password'" placeholder="Hasło" />
+            <!-- :icon="'car'"  -->
             <!-- label="Password" -->
             <v-sheet
                 class="bg-arsenic rounded-pill mb-3 align-center d-flex login align-center justify-center d-flex c-pointer"

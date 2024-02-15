@@ -6,18 +6,19 @@
         <div class="ml-2" style="max-height: 400px;">
             <DataTable>
                 <template #body>
-                    <ctr v-for="(conversation, index) in  conversations" :key="conversation.id" class="text-left c-pointer"
-                        :class="{ 'selected-row': index === selectedRowIndex }"
-                        @click="setSelectedConversations(conversation, index)">
+                    <ctr v-if="usersParams.fullName === ''" v-for="conversation in  conversations" :key="conversation.id"
+                        class="text-left c-pointer" :class="{ 'selected-row': conversation.id === selectedConversationId }"
+                        @click="setSelectedConversation(conversation)">
                         <ctd>
                             <div>
                                 <ConversationItem :conversation="conversation" />
                             </div>
                         </ctd>
                     </ctr>
-                    <ctr v-if="usersParams.fullName !== ''" v-for="( user, index ) in users" :key="user.id"
-                        class="text-left c-pointer" :class="{ 'selected-row': index === selectedRowIndex }"
-                        @click="setSelectedConversations(user, index), refreshConversations">
+                    <!-- index do wywalenia -->
+                    <ctr v-else v-for="( user, index ) in users" :key="user.id" class="text-left c-pointer"
+                        :class="{ 'selected-row': index === selectedRowIndex }"
+                        @click="setSelectedConversation(user, index), refreshConversations">
                         <ctd>
                             <div @click="createConversation(user.id)">
                                 {{ user.avatar }} {{ user.name }} {{ user.lastName }}
@@ -47,11 +48,13 @@ export default {
         return {
             selectedRowIndex: null,
             maxWidthSearchInput: "100%",
-            searchedUser: ""
+            searchedUser: "",
+            selectedConversationId: 0
         };
     },
     computed: {
         usersParams() {
+            console.log(this.$store.getters.getUsersParams);
             return this.$store.getters.getUsersParams
         },
         conversationParams() {
@@ -68,6 +71,9 @@ export default {
         },
         loggedUser() {
             return this.$store.getters.getUser
+        },
+        messagesParams() {
+            return this.$store.getters.getMessagesParams
         }
     },
     methods: {
@@ -86,11 +92,12 @@ export default {
             this.$store.dispatch("listUsers")
             console.log(this.usersParams);
         },
-        setSelectedConversations(conversation, index) {
+        setSelectedConversation(conversation) {
             this.$store.commit('setConversation', conversation);
-            this.selectedRowIndex = index;
-            const params = { conversationId: this.conversation.id };
-            this.$store.dispatch('listMessages', params);
+            this.selectedConversationId = conversation.id;
+            this.messagesParams.conversationId = this.selectedConversationId
+            this.$store.commit('setMessagesParams', conversation);
+            this.$store.dispatch('listMessages');
         },
         async refreshConversations(conversation) {
             if (this.searchedUser !== '') {
@@ -103,9 +110,7 @@ export default {
             this.$nextTick(() => {
                 if (this.conversations.length > 0) {
                     this.$store.commit('setConversation', this.conversations[0]);
-                    const params = { conversationId: this.conversation.id };
-                    this.$store.dispatch('listMessages', params);
-                    this.selectedRowIndex = 0;
+                    this.setSelectedConversation(this.conversations[0])
                 }
             });
         },
@@ -165,7 +170,7 @@ export default {
 .mt-3.ml-2 {
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 99;
     background: inherit;
 }
 </style>

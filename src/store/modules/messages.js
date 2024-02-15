@@ -1,13 +1,19 @@
 const URL_MESSAGES = "/messages";
 
+const defaultMessagesParams = {
+    conversationId: 0,
+}
+
 export default {
     state: {
         messages: [],
-        message: ""
+        message: "",
+        messagesParams: { ...defaultMessagesParams }
     },
     getters: {
         getMessages: (state) => state.messages,
         getMessage: (state) => state.message,
+        getMessagesParams: (state) => state.messagesParams,
     },
     mutations: {
         setMessages(state, data) {
@@ -16,12 +22,15 @@ export default {
         setMessage(state, data) {
             state.message = data;
         },
+        setMessagesParams(state, data) {
+            state.messagesParams = data;
+        },
     },
     actions: {
-        listMessages({ commit }, params) {
-            console.log(params);
+        listMessages({ commit, getters }) {
+            const params = getters.getMessagesParams;
             axios
-                .get(URL_MESSAGES, { params: params })
+                .get(URL_MESSAGES, { params })
                 .then((response) => {
                     const messages = response.data;
                     console.log(messages);

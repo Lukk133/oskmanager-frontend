@@ -4,21 +4,17 @@
             <SelectInput @update:model-value="" title="Grupa odbiorców" />
         </v-sheet>
         <v-sheet class="pa-2 bg-background">
-            <SelectInput @update:model-value="" title="Kategoria" :items="categories" />
+            <SelectInput class="selectInput" @update:model-value="updateCategory" title="Kategoria" :items="categories" />
         </v-sheet>
     </div>
 </template>
 
-
-
 <script>
 import SelectInput from "../../components/ui/inputs/SelectInput.vue";
-import SearchInput from "../../components/ui/inputs/SearchInput.vue";
 
 export default {
     components: {
         SelectInput,
-        SearchInput
     },
     computed: {
         ridesParams() {
@@ -29,9 +25,16 @@ export default {
         },
         categories() {
             return this.$store.getters.getCategories;
-        }
+        },
+        conversationsParams() {
+            return this.$store.getters.getConversationsParams;
+        },
     },
     methods: {
+        updateCategory(category) {
+            this.conversationsParams.categoryId = category.id;
+            this.$store.dispatch("listConversations", this.conversationsParams);
+        },
         listRides() {
             this.$store.dispatch("listRides")
         },
@@ -44,5 +47,5 @@ export default {
     }
 }; 
 </script>
-<style></style>
+<style scoped></style>
 

@@ -152,9 +152,7 @@ export default {
 </script>
 <style scoped>
 .select-title {
-
     color: #707070;
-
     font-family: Rubik;
     font-size: 14px;
     font-style: normal;
@@ -226,7 +224,8 @@ export default {
     position: absolute;
     left: 0;
     right: 0;
-    z-index: 1;
+    z-index: 100;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .custom-select .items div {
@@ -234,6 +233,7 @@ export default {
     padding-left: 1em;
     cursor: pointer;
     user-select: none;
+    overflow: visible;
 }
 
 

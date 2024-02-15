@@ -2,6 +2,7 @@ const URL_USERS = "/users";
 
 const defaultUsersParams = {
     schoolId: 0,
+    fullName: '',
     userType: "INSTRUCTOR"
 }
 

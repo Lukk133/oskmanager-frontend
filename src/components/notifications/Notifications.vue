@@ -1,26 +1,25 @@
 <template>
     <div class="rides-list">
-        <div class="mt-3 ml-2 bg-solitude">
-            <SearchInput :title="'Wyszukiwarka tekstowa'" :width="maxWidthSearchInput" v-model="usersParams.fullName" />
-        </div>
-        <div class="ml-2" style="max-height: 400px;">
+        <div class="ml-2" style="max-height: 455px;">
             <DataTable>
                 <template #body>
                     <ctr v-if="usersParams.fullName === ''" v-for="conversation in  conversations" :key="conversation.id"
                         class="text-left c-pointer" :class="{ 'selected-row': conversation.id === selectedConversationId }"
                         @click="setSelectedConversation(conversation)">
                         <ctd>
-                            <div>
-                                <ConversationItem :conversation="conversation" />
-                            </div>
-                        </ctd>
-                    </ctr>
-                    <ctr v-else v-for="user in users" :key="user.id" class="text-left c-pointer"
-                        :class="{ 'selected-row': user.id === selectedRowIndex }"
-                        @click="setSelectedConversation(user), refreshConversations">
-                        <ctd>
-                            <div @click="createConversation(user.id)">
-                                {{ user.avatar }} {{ user.name }} {{ user.lastName }}
+                            <div class="d-flex justify-space-between w-100">
+                                <div class="ml-6 mr-8">
+                                    <!-- <span>
+                                        <icon :icon="'bell'" class="" />
+                                    </span> -->
+                                    Antoni Nowicki
+                                    <span class="notification ml-6"
+                                        :class="{ 'alert': conversation.id === selectedConversationId }">Napisał
+                                        wiadomość</span>
+                                </div>
+                                <div class="notification" :class="{ 'alert': conversation.id === selectedConversationId }">
+                                    {{ formatLastMessageDate(conversation?.lastMessageAt) }}
+                                </div>
                             </div>
                         </ctd>
                     </ctr>
@@ -31,21 +30,18 @@
 </template>
 
 <script>
-import SearchInput from "../../components/ui/inputs/SearchInput.vue";
 import DeleteConfimrationDialog from '../ui/dialogs/DeleteConfimrationDialog.vue';
+import Icon from '../ui/icons/Icon.vue';
 import DataTable from '../instructor/show/rides/Table.vue';
-import ConversationItem from '../ui/conversation/ConversationItem.vue';
 
 export default {
     components: {
-        SearchInput,
         DeleteConfimrationDialog,
         DataTable,
-        ConversationItem,
+        Icon
     },
     data() {
         return {
-            maxWidthSearchInput: "100%",
             searchedUser: "",
             selectedConversationId: 0
         };
@@ -75,6 +71,17 @@ export default {
         }
     },
     methods: {
+        formatLastMessageDate(dateArray) {
+            if (!dateArray || dateArray.length !== 7) {
+                return '';
+            }
+
+            const [year, month, day, hours, minutes, seconds, milliseconds] = dateArray;
+            const formattedDate = new Date(year, month - 1, day, hours, minutes, seconds, milliseconds);
+
+            const options = { day: 'numeric', month: 'numeric', year: 'numeric' };
+            return formattedDate.toLocaleDateString(undefined, options);
+        },
         async createConversation(id) {
             const payload = { userIds: [this.loggedUser.id, id] };
             await this.$store.dispatch("createConversation", payload);
@@ -165,10 +172,8 @@ export default {
     background-color: #F5F7FA;
 }
 
-.mt-3.ml-2 {
-    position: sticky;
-    top: 0;
-    z-index: 99;
-    background: inherit;
+.notification {
+    margin-top: 1px;
+    font-size: 12px;
 }
 </style>

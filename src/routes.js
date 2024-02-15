@@ -15,6 +15,7 @@ import CarList from "./views/car/List.vue";
 import CarCreate from "./views/car/Create.vue";
 import CarShow from "./views/car/Show.vue";
 import Communicator from "./views/communicator/Show.vue";
+import Notifications from "./views/notifications/Show.vue";
 
 import store from "./store";
 
@@ -121,6 +122,12 @@ const routes = [
         name: "Communicator",
         path: "/:schoolId/communicator",
         component: Communicator,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: "Notifications",
+        path: "/:schoolId/notifications",
+        component: Notifications,
         meta: { requiresAuth: true },
     },
     {

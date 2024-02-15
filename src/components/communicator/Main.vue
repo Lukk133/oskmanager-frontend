@@ -29,9 +29,3 @@ export default {
     // } co to jest?
 }
 </script>
-<style scoped>
-/* .rides-content {
-    flex: 1;
-    czm
-} */
-</style>
